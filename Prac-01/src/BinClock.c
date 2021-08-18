@@ -31,6 +31,13 @@ int HH,MM,SS;
 
 
 // Clean up function to avoid damaging used pins
+
+void changeHours(){
+	wiringPiI2CWriteReg8 (RTC, HOUR_REGISTER, hour++) ;
+}
+void changeMins(){
+	wiringPiI2CWriteReg8 (RTC, MIN_REGISTER, mins++) ;
+}
 void CleanUp(int sig){
 	printf("Cleaning up\n");
 	
@@ -113,6 +120,12 @@ int main(void){
 		
 		//Toggle Seconds LED
 		//Write your logic here
+		if(digitalRead(RED_LED)){
+			digitalWrite(RED_LED,LOW);
+		}
+		else{
+			digitalWrite(RED_LED,HIGH);
+		}
 		
 		// Print out the time we have stored on our RTC
 		printf("The current time is: %d:%d:%d\n", hours, mins, secs);
