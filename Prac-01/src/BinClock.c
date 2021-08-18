@@ -33,7 +33,7 @@ int HH,MM,SS;
 // Clean up function to avoid damaging used pins
 
 void changeHours(){
-	wiringPiI2CWriteReg8 (RTC, HOUR_REGISTER, hour++) ;
+	wiringPiI2CWriteReg8 (RTC, HOUR_REGISTER, hours++) ;
 }
 void changeMins(){
 	wiringPiI2CWriteReg8 (RTC, MIN_REGISTER, mins++) ;
