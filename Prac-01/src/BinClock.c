@@ -18,6 +18,10 @@
 #include "BinClock.h"
 #include "CurrentTime.h"
 
+#define HOUR_BUTTON 17
+#define MINUTE_BUTTON 27
+#define RED_LED 16
+
 //Global variables
 int hours, mins, secs;
 long lastInterruptTime = 0; //Used for button debounce
@@ -29,14 +33,19 @@ int HH,MM,SS;
 // Clean up function to avoid damaging used pins
 void CleanUp(int sig){
 	printf("Cleaning up\n");
-
+	
 	//Set LED to low then input mode
 	//Logic here
+	digitalWrite(RED_LED,LOW);
+	pinMode(RED_LED, INPUT);
+	pinMode(HOUR_BUTTON,INPUT);
+	pinMode(MINUTE_BUTTON,INPUT);
+	pullUpDnControl(HOUR_BUTTON, PUD_DOWN);
+	pullUpDnControl(MINUTE_BUTTON, PUD_DOWN);
 
-
-	for (int j=0; j < sizeof(BTNS)/sizeof(BTNS[0]); j++) {
-		pinMode(BTNS[j],INPUT);
-	}
+	// for (int j=0; j < sizeof(BTNS)/sizeof(BTNS[0]); j++) {
+	// 	pinMode(BTNS[j],INPUT);
+	// }
 
 	exit(0);
 
@@ -56,20 +65,24 @@ void initGPIO(void){
 	
 	//Set up the LED
 	//Write your Logic here
+	pinMode(RED_LED, OUTPUT);
+	digitalWrite(RED_LED, OUTPUT);
 
-	
 	printf("LED and RTC done\n");
 	
 	//Set up the Buttons
-	for(int j=0; j < sizeof(BTNS)/sizeof(BTNS[0]); j++){
-		pinMode(BTNS[j], INPUT);
-		pullUpDnControl(BTNS[j], PUD_UP);
-	}
-	
+	// for(int j=0; j < sizeof(BTNS)/sizeof(BTNS[0]); j++){
+	// 	pinMode(BTNS[j], INPUT);
+	// 	pullUpDnControl(BTNS[j], PUD_UP);
+	// }
+	pinMode(HOUR_BUTTON,INPUT);
+	pinMode(MINUTE_BUTTON,INPUT);
+	pullUpDnControl(HOUR_BUTTON, PUD_UP);
+	pullUpDnControl(MINUTE_BUTTON, PUD_UP);
 	//Attach interrupts to Buttons
 	//Write your logic here
-	
-
+	wiringPiISR(HOUR_BUTTON, INT_EDGE_BOTH, changeHours);
+	wiringPiISR(MINUTE_BUTTON, INT_EDGE_BOTH, changeMins);
 
 	printf("BTNS done\n");
 	printf("Setup done\n");
