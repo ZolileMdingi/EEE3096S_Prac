@@ -73,7 +73,7 @@ void initGPIO(void){
 	//Set up the LED
 	//Write your Logic here
 	pinMode(RED_LED, OUTPUT);
-	digitalWrite(RED_LED, OUTPUT);
+	digitalWrite(RED_LED, LOW);
 
 	printf("LED and RTC done\n");
 	
@@ -88,8 +88,8 @@ void initGPIO(void){
 	pullUpDnControl(MINUTE_BUTTON, PUD_UP);
 	//Attach interrupts to Buttons
 	//Write your logic here
-	wiringPiISR(HOUR_BUTTON, INT_EDGE_BOTH, changeHours);
-	wiringPiISR(MINUTE_BUTTON, INT_EDGE_BOTH, changeMins);
+	wiringPiISR(HOUR_BUTTON, INT_EDGE_BOTH, hourInc);
+	wiringPiISR(MINUTE_BUTTON, INT_EDGE_BOTH, minInc);
 
 	printf("BTNS done\n");
 	printf("Setup done\n");
@@ -218,6 +218,8 @@ void hourInc(void){
 	if (interruptTime - lastInterruptTime>200){
 		printf("Interrupt 1 triggered, %x\n", hours);
 		//Fetch RTC Time
+		wiringPiI2CWriteReg8(RTC, HOUR_REGISTER,++hours) ;
+		printf("Interrupt 1 ending, %x\n", hours);
 		//Increase hours by 1, ensuring not to overflow
 		//Write hours back to the RTC
 	}
