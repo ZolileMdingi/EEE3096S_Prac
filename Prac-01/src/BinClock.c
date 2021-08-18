@@ -107,6 +107,9 @@ int main(void){
 	for (;;){
 		//Fetch the time from the RTC
 		//Write your logic here
+		wiringPiI2CReadReg8(hours, HOUR_REGISTER) ;
+		wiringPiI2CReadReg8(mins, MIN_REGISTER) ;
+		wiringPiI2CReadReg8(secs, SEC_REGISTER) ;
 		
 		//Toggle Seconds LED
 		//Write your logic here
