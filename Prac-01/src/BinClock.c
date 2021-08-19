@@ -33,7 +33,14 @@ int HH,MM,SS;
 // Clean up function to avoid damaging used pins
 
 void changeHours(){
-	wiringPiI2CWriteReg8 (RTC, HOUR_REGISTER, hours++) ;
+        if(hours<23){
+                hours++;
+        }
+        else{
+                hours = 0x00;
+                mins = 0x00;
+        }
+        wiringPiI2CWriteReg8 (RTC, HOUR_REGISTER, hours) ;
 }
 void changeMins(){
 	wiringPiI2CWriteReg8 (RTC, MIN_REGISTER, mins++) ;
@@ -78,10 +85,7 @@ void initGPIO(void){
 	printf("LED and RTC done\n");
 	
 	//Set up the Buttons
-	// for(int j=0; j < sizeof(BTNS)/sizeof(BTNS[0]); j++){
-	// 	pinMode(BTNS[j], INPUT);
-	// 	pullUpDnControl(BTNS[j], PUD_UP);
-	// }
+	
 	pinMode(HOUR_BUTTON,INPUT);
 	pinMode(MINUTE_BUTTON,INPUT);
 	pullUpDnControl(HOUR_BUTTON, PUD_UP);
