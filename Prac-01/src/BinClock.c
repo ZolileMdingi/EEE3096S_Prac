@@ -132,6 +132,14 @@ int main(void){
 
 		//using a delay to make our program "less CPU hungry"
 		delay(1000); //milliseconds
+		if(secs<59){
+                        secs++;
+        }
+        else{
+                        secs = 0x00;
+                        changeMins();
+        }
+        wiringPiI2CWriteReg8(RTC, SEC_REGISTER, secs);
 	}
 	return 0;
 }
