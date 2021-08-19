@@ -233,15 +233,23 @@ void hourInc(void){
  * Software Debouncing should be used
  */
 void minInc(void){
-	long interruptTime = millis();
+        long interruptTime = millis();
 
-	if (interruptTime - lastInterruptTime>200){
-		printf("Interrupt 2 triggered, %x\n", mins);
-		//Fetch RTC Time
-		//Increase minutes by 1, ensuring not to overflow
-		//Write minutes back to the RTC
-	}
-	lastInterruptTime = interruptTime;
+        if (interruptTime - lastInterruptTime>200){
+                printf("Interrupt 2 triggered, %d\n", mins);
+                if(mins<59){
+                        mins++ ;
+                }
+                else{
+                        mins =0;
+                        changeHours();
+                }
+                wiringPiI2CWriteReg8(RTC, MIN_REGISTER,mins);
+                //Fetch RTC Time
+                //Increase minutes by 1, ensuring not to overflow
+                //Write minutes back to the RTC
+        }
+        lastInterruptTime = interruptTime;
 }
 
 //This interrupt will fetch current time from another script and write it to the clock registers
