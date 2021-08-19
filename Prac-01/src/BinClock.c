@@ -43,7 +43,14 @@ void changeHours(){
         wiringPiI2CWriteReg8 (RTC, HOUR_REGISTER, hours) ;
 }
 void changeMins(){
-	wiringPiI2CWriteReg8 (RTC, MIN_REGISTER, mins++) ;
+        if(mins<59){
+                mins++;
+        }
+        else{
+                mins = 0;
+                changeHours();
+        }
+        wiringPiI2CWriteReg8 (RTC, MIN_REGISTER, mins) ;
 }
 void CleanUp(int sig){
 	printf("Cleaning up\n");
