@@ -212,18 +212,24 @@ int decCompensation(int units){
  * Software Debouncing should be used
  */
 void hourInc(void){
-	//Debounce
-	long interruptTime = millis();
+        //Debounce
+        long interruptTime = millis();
 
-	if (interruptTime - lastInterruptTime>200){
-		printf("Interrupt 1 triggered, %x\n", hours);
-		//Fetch RTC Time
-		wiringPiI2CWriteReg8(RTC, HOUR_REGISTER,++hours) ;
-		printf("Interrupt 1 ending, %x\n", hours);
-		//Increase hours by 1, ensuring not to overflow
-		//Write hours back to the RTC
-	}
-	lastInterruptTime = interruptTime;
+        if (interruptTime - lastInterruptTime>200){
+                printf("Interrupt 1 triggered, %d\n", hours);
+                //Fetch RTC Time
+                if(hours<23){
+                        wiringPiI2CWriteReg8(RTC, HOUR_REGISTER,++hours) ;
+                }
+                else{
+                        hours = 0;
+                        wiringPiI2CWriteReg8(RTC, HOUR_REGISTER,hours);
+                }
+                //printf("Interrupt 1 ending, %x\n", hours);
+                //Increase hours by 1, ensuring not to overflow
+                //Write hours back to the RTC
+        }
+        lastInterruptTime = interruptTime;
 }
 
 /* 
