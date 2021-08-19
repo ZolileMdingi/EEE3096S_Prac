@@ -128,7 +128,7 @@ int main(void){
 		}
 		
 		// Print out the time we have stored on our RTC
-		printf("The current time is: %d:%d:%d\n", hours, mins, secs);
+		printf("The current time is: %02d:%02d:%02d\n", hours, mins, secs);
 
 		//using a delay to make our program "less CPU hungry"
 		delay(1000); //milliseconds
