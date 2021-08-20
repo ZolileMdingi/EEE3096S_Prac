@@ -5,6 +5,8 @@
 //https://stackoverflow.com/questions/1674032/static-const-vs-define-vs-enum
 
 // Function definitions
+void changeHours();
+void changeMins();
 int hFormat(int hours);
 void lightHours(int units);
 void lightMins(int units);
