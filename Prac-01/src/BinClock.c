@@ -79,7 +79,7 @@ void initGPIO(void){
 	 * Note: wiringPi does not use GPIO or board pin numbers (unless specifically set to that mode)
 	 */
 	printf("Setting up\n");
-	wiringPiSetup(); //This is the default mode. If you want to change pinouts, be aware
+	wiringPiSetupGpio(); //This is the BCM mode.
 	
 
 	RTC = wiringPiI2CSetup(RTCAddr); //Set up the RTC
