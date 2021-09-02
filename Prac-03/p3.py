@@ -4,6 +4,8 @@ import random
 import ES2EEPROMUtils
 import os
 
+from time import sleep #To be removed was just testing if my connections was correct
+
 # some global variables that need to change as we run the program
 end_of_game = None  # set if the user wins or ends the game
 
@@ -64,7 +66,18 @@ def display_scores(count, raw_data):
 # Setup Pins
 def setup():
     # Setup board mode
+    GPIO.setmode(GPIO.BCM) # The Board has been set to the Broadcom set up, which is what the chip that powers the pi use.
     # Setup regular GPIO
+    
+    # LEDs 
+    GPIO.setup(LED_value, GPIO.OUT)
+    GPIO.setup(LED_accuracy, GPIO.OUT)
+    GPIO.output(LED_accuracy, False)
+    GPIO.output(LED_value, False)
+
+    #Buttons
+    GPIO.setup(btn_increase, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
     # Setup PWM channels
     # Setup debouncing and callbacks
     pass
@@ -146,7 +159,9 @@ if __name__ == "__main__":
         setup()
         welcome()
         while True:
-            menu()
+            GPIO.output(LED_value, not GPIO.input(btn_increase))
+            sleep(0.1)
+            #menu()
             pass
     except Exception as e:
         print(e)
