@@ -19,7 +19,7 @@ GPIO.setup(btn_increase, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 try:
     while True:
-        GPIO.output(LED_value, not GPIO.input(btn_submit))
+        GPIO.output(LED_value, not GPIO.input(btn_increase))
         sleep(0.1)
 finally:
     GPIO.output(LED_value, False)
