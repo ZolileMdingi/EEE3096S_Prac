@@ -68,13 +68,11 @@ def setup():
     # Setup regular GPIO
     
     # LEDs 
-    GPIO.setup(LED_value, GPIO.OUT)
-    GPIO.setup(LED_accuracy, GPIO.OUT)
-    GPIO.output(LED_accuracy, False)
-    GPIO.output(LED_value, False)
+    GPIO.setup(LEDS, GPIO.OUT)
 
     #Buttons
-    GPIO.setup(btn_increase, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(SUBMIT_BTN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(GUESS_TOGGLE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     # Setup PWM channels
     # Setup debouncing and callbacks
