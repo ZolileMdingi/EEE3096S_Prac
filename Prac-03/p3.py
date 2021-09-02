@@ -4,8 +4,6 @@ import random
 import ES2EEPROMUtils
 import os
 
-from time import sleep #To be removed was just testing if my connections was correct
-
 # some global variables that need to change as we run the program
 end_of_game = None  # set if the user wins or ends the game
 
@@ -159,9 +157,7 @@ if __name__ == "__main__":
         setup()
         welcome()
         while True:
-            GPIO.output(LED_value, not GPIO.input(btn_increase))
-            sleep(0.1)
-            #menu()
+            menu()
             pass
     except Exception as e:
         print(e)
