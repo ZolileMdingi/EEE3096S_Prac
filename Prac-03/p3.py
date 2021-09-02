@@ -76,6 +76,7 @@ def setup():
     GPIO.setup(GUESS_TOGGLE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     # Setup PWM channels
+    GPIO.setup(PWM_LED, GPIO.OUT)
     # Setup debouncing and callbacks
     pass
 
