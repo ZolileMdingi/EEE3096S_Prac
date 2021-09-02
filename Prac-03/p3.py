@@ -9,7 +9,8 @@ end_of_game = None  # set if the user wins or ends the game
 
 # DEFINE THE PINS USED HERE
 
-LEDS = [17,27,22,12]
+LEDS = [17,27,22]
+PWM_LED = 12
 SUBMIT_BTN = 24
 GUESS_TOGGLE = 23
 BUZZER =13
