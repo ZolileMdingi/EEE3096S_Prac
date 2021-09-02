@@ -8,6 +8,7 @@ btn_submit = 16
 btn_increase = 18
 
 # LEDs 
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(LED_value, GPIO.OUT)
 GPIO.setup(LED_accuracy, GPIO.OUT)
 GPIO.output(LED_accuracy, False)
