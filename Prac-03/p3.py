@@ -16,6 +16,36 @@ GUESS_TOGGLE = 23
 BUZZER =13
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 
+_guess = 0
+
+def btn_increase_pressed(channel):
+    global _guess
+    if _guess == 0:
+        GPIO.output(LEDS, GPIO.LOW)
+    elif _guess == 1:
+        GPIO.output(22, GPIO.HIGH)
+    elif _guess == 2:
+        GPIO.output(27, GPIO.HIGH)
+        GPIO.output(22, GPIO.LOW)
+    elif _guess == 3:
+        GPIO.output([27, 22], GPIO.HIGH)
+    elif _guess == 4:
+        GPIO.output([27, 22], GPIO.LOW)
+        GPIO.output(17, GPIO.HIGH)
+    elif _guess == 5:
+        GPIO.output(22, GPIO.HIGH)
+    elif _guess == 6:
+        GPIO.output(22, GPIO.LOW)
+        GPIO.output(27, GPIO.HIGH)
+    elif _guess == 7:
+        GPIO.output(22, GPIO.HIGH)
+
+    if _guess < 0:
+        _guess += 1
+    else:
+        _guess = 0
+
+
 
 # Print the game banner
 def welcome():
