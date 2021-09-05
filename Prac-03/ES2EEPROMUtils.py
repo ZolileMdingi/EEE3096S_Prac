@@ -127,7 +127,8 @@ class ES2EEPROM:
             data_to_write.append(score[1])
         print(data_to_write)
         self.write_block(1, data_to_write)
-        print(eeprom.read_block(0,4))
+        print(self.read_byte(0))
+#         print(eeprom.read_block(0,4))
 
 
 if __name__ == "__main__":
