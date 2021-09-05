@@ -2,50 +2,66 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
+
 GPIO.setup(23, GPIO.IN)
+
 
 
 GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-GPIO.setup(12, GPIO.OUT)
+print(GPIO.input(23))
 
-pi_pwm = GPIO.PWM(12,1000)
-pi_pwm.start(0)
+print(not GPIO.input(23))
 
-try:
+GPIO.setup([12,13,17,27,22], GPIO.OUT)
 
-    while 1:
+while not GPIO.input(23) == GPIO.LOW:
 
-        while not GPIO.input(23)==GPIO.LOW:
+    GPIO.output([12, 13,17,27,22], GPIO.HIGH)
 
-            pi_pwm.ChangeDutyCycle(100)
-            print("Duty cycle on 100")
+print("button was pressed")
 
-            time.sleep(0.1)
 
-        while not GPIO.input(23)==GPIO.LOW:
 
-            pi_pwm.ChangeDutyCycle(75)
-            print("Duty cycle on 75")
-            time.sleep(0.1)
+GPIO.cleanup()
 
-        while not GPIO.input(23)==GPIO.LOW:
+# pi_pwm = GPIO.PWM(12,1000)
+# pi_pwm.start(0)
 
-            pi_pwm.ChangeDutyCycle(50)
-            print("Duty cycle on 50")
+# try:
 
-            time.sleep(0.1)
+#     while 1:
 
-        while not GPIO.input(23)==GPIO.LOW:
+#         while not GPIO.input(23)==GPIO.LOW:
 
-            pi_pwm.ChangeDutyCycle(25)
-            print("Duty cycle on 25")
-            time.sleep(0.1)
+#             pi_pwm.ChangeDutyCycle(100)
+#             print("Duty cycle on 100")
 
-except KeyboardInterrupt:
+#             time.sleep(0.1)
 
-    pass
+#         while not GPIO.input(23)==GPIO.LOW:
 
-pi_pwm.stop()
+#             pi_pwm.ChangeDutyCycle(75)
+#             print("Duty cycle on 75")
+#             time.sleep(0.1)
+
+#         while not GPIO.input(23)==GPIO.LOW:
+
+#             pi_pwm.ChangeDutyCycle(50)
+#             print("Duty cycle on 50")
+
+#             time.sleep(0.1)
+
+#         while not GPIO.input(23)==GPIO.LOW:
+
+#             pi_pwm.ChangeDutyCycle(25)
+#             print("Duty cycle on 25")
+#             time.sleep(0.1)
+
+# except KeyboardInterrupt:
+
+#     pass
+
+# pi_pwm.stop()
 
 GPIO.cleanup()
