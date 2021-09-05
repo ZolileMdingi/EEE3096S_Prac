@@ -19,25 +19,27 @@ try:
         while not GPIO.input(23)==GPIO.LOW:
 
             pi_pwm.ChangeDutyCycle(100)
+            print("Duty cycle on 100")
 
             time.sleep(0.1)
 
         while not GPIO.input(23)==GPIO.LOW:
 
             pi_pwm.ChangeDutyCycle(75)
-
+            print("Duty cycle on 75")
             time.sleep(0.1)
 
         while not GPIO.input(23)==GPIO.LOW:
 
             pi_pwm.ChangeDutyCycle(50)
+            print("Duty cycle on 50")
 
             time.sleep(0.1)
 
         while not GPIO.input(23)==GPIO.LOW:
 
             pi_pwm.ChangeDutyCycle(25)
-
+            print("Duty cycle on 25")
             time.sleep(0.1)
 
 except KeyboardInterrupt:
