@@ -135,7 +135,7 @@ def getName(nameChars):
     return name
 def fetch_scores(eeprom):
     score_count = eeprom.read_block(0xff,1)[0]
-    scores_raw = eeprom.read_block(1,scores_count*4)
+    scores_raw = eeprom.read_block(1,score_count*4)
     scores = []
     for x in range(0, score_count*4,4):
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
