@@ -135,5 +135,5 @@ if __name__ == "__main__":
     eeprom.clear(4096)
     eeprom.populate_mock_scores()
     sleep(0.1)
-    print(eeprom.read_block(0xff,1))
+    print(eeprom.read_byte(0xff))
 
