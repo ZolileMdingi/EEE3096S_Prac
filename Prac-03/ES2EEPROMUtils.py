@@ -128,12 +128,24 @@ class ES2EEPROM:
         print(data_to_write)
         self.write_block(1, data_to_write)
         
-
+def getName(nameChars):
+    name = ''
+    for x in nameChars:
+        name = name + chr(x)
+    return name
+def fetch_scores(eeprom):
+    score_count = eeprom.read_block(0xff,1)[0]
+    scores_raw = eeprom.read_block(1,scores_count*4)
+    scores = []
+    for x in range(0, score_count*4,4):
+        scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
+    return scores
 
 if __name__ == "__main__":
     eeprom = ES2EEPROM()
     eeprom.clear(4096)
     eeprom.populate_mock_scores()
     sleep(0.1)
-    print(eeprom.read_block(0xff,1))
+    print(fetch_scores(eeprom))
+    
 
