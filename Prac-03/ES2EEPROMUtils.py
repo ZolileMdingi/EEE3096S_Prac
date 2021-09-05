@@ -125,6 +125,7 @@ class ES2EEPROM:
             for letter in score[0]:
                 data_to_write.append(ord(letter))
             data_to_write.append(score[1])
+        print(data_to_write)
         self.write_block(1, data_to_write)
 
 
