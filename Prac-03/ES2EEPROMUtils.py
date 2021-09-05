@@ -127,11 +127,11 @@ class ES2EEPROM:
             data_to_write.append(score[1])
         print(data_to_write)
         self.write_block(1, data_to_write)
+        print(eeprom.read_block(1,8))
 
 
 if __name__ == "__main__":
     eeprom = ES2EEPROM()
     eeprom.clear(4096)
     eeprom.populate_mock_scores()
-    print(eeprom.read_block(1,8))
 
