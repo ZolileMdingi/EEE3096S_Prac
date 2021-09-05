@@ -78,6 +78,7 @@ try:
                             print(dc)
                             pi_pwm.ChangeDutyCycle(dc)
 except KeyboardInterrupt:
+    print("WE still here dawg")
     pass
                         #break
 pi_pwm.stop()
