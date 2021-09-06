@@ -137,13 +137,14 @@ def fetch_scores():
 
 
 # Save high scores
-def save_scores():
+def save_scores(newScore):
     # fetch scores
     # include new score
     # sort
     # update total amount of scores
     # write new scores
     oldScoreCount, oldScore = fetch_scores()
+    oldSScore.append(newScore)
     oldScore.sort(key=lambda x: x[1])
     data_to_write = []
     for score in oldScore:
@@ -151,6 +152,7 @@ def save_scores():
             data_to_write.append(ord(letter))
         data_to_write.append(score[1])
     eeprom.clear((oldScoreCount+1)*32)
+    eeprom.write_block(0xff, [oldScoreCount+1])
     eeprom.write_block(1, data_to_write)
     pass
 
