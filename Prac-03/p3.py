@@ -19,6 +19,7 @@ eeprom = ES2EEPROMUtils.ES2EEPROM()
 _guess = 0
 
 def btn_increase_pressed(channel):
+    pass
 #     if GPIO.event_detected(channel):
 #         time.sleep(0.5)
 #         if _guess == 0:
