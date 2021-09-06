@@ -119,6 +119,7 @@ class ES2EEPROM:
         self.write_block(0, [8])
         scores = [["jtf", 9], ["dev", 10], ["Lju", 3], ["EuE", 6],["jth", 1], ["hjk", 11], ["xju", 4], ["hgc", 2]]
         scores.sort(key=lambda x: x[1])
+        print(scores)
         data_to_write = []
         for score in scores:
             # get the string
