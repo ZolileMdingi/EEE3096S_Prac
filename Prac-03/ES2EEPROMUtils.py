@@ -136,10 +136,13 @@ def getName(nameChars):
     return name
 def fetch_scores(eeprom):
     score_count = eeprom.read_block(0xff,1)[0]
+    print("score_count",score_count)
     scores_raw = eeprom.read_block(0,score_count*4)
+    print("the raw scores",scores_raw)
     scores = []
     for x in range(0, score_count*4,4):
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
+    print("the scores", scores)
     return scores
 
 if __name__ == "__main__":
