@@ -89,6 +89,10 @@ def display_scores(count, raw_data):
     # print the scores to the screen in the expected format
     print("There are {} scores. Here are the top 3!".format(count))
     # print out the scores in the required format
+    raw_data.sort(key=lambda x: x[1])
+    for i in range(1,4):
+        data = raw_data[i-1]
+        print("{} - {} took {} guesses".format(i,data[0],data[1]))
     pass
 
 
@@ -110,17 +114,26 @@ def setup():
     # Setup debouncing and callbacks
     pass
 
+def getName(nameChars):
+    name = ''
+    for x in nameChars:
+        name = name + chr(x)
+    return name
 
 # Load high scores
 def fetch_scores():
     # get however many scores there are
     score_count = None
     # Get the scores
-    
     # convert the codes back to ascii
-    
     # return back the results
+    score_count = eeprom.read_block(0xff,1)[0]
+    scores_raw = eeprom.read_block(1,score_count*4)
+    scores = []
+    for x in range(0, score_count*4,4):
+        scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
     return score_count, scores
+
 
 
 # Save high scores
@@ -130,6 +143,15 @@ def save_scores():
     # sort
     # update total amount of scores
     # write new scores
+    oldScoreCount, oldScore = fetch_scores()
+    oldScore.sort(key=lambda x: x[1])
+    data_to_write = []
+    for score in oldScore:
+        for letter in score[0]:
+            data_to_write.append(ord(letter))
+        data_to_write.append(score[1])
+    eeprom.clear((oldScoreCount+1)*32)
+    eeprom.write_block(1, data_to_write)
     pass
 
 
