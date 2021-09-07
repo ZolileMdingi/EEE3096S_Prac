@@ -273,7 +273,7 @@ def btn_guess_pressed(channel):
         print("took a lil sip")
         end_of_game = True   
     print("game done")   
-    pass
+    # pass
 
 
 # LED Brightness
