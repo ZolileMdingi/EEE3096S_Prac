@@ -37,11 +37,7 @@ GPIO.add_event_detect(SUBMIT_GUESS, GPIO.RISING)
 GPIO.output([22,27,17], GPIO.LOW)
 def btn_increase_pressed(channel):
     global _guess
-    if _guess < 7: 
-        _guess += 1
-        print("increment "+str(_guess))
-    else:
-        _guess = -1
+    
     if _guess == 0:
         GPIO.output([22,27,17], GPIO.LOW)
     elif _guess == 1:
@@ -62,6 +58,11 @@ def btn_increase_pressed(channel):
     elif _guess == 7:
         GPIO.output(22, GPIO.HIGH)
     print(_guess)
+    if _guess < 7: 
+        _guess += 1
+        print("increment "+str(_guess))
+    else:
+        _guess = -1
     
 GPIO.add_event_detect(GUESS_BTN,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
 try:
