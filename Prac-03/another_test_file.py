@@ -35,6 +35,7 @@ pi_pwm.start(100)
 # GPIO.add_event_detect(GUESS_BTN,GPIO.RISING)
 GPIO.add_event_detect(SUBMIT_GUESS, GPIO.RISING)
 def btn_increase_pressed(channel):
+    global _guess
     if _guess == 0:
         GPIO.output([22,27,17], GPIO.LOW)
     elif _guess == 1:
