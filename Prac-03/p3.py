@@ -72,28 +72,27 @@ def welcome():
 def menu():
     global value
     global end_of_game
-    while True:
-        option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
-        option = option.upper()
-        if option == "H":
-            os.system('clear')
-            print("HIGH SCORES!!")
-            s_count, ss = fetch_scores()
-            display_scores(s_count, ss)
-        elif option == "P":
-            os.system('clear')
-            print("Starting a new round!")
-            print("Use the buttons on the Pi to make and submit your guess!")
-            print("Press and hold the guess button to cancel your game")
-            value = generate_number()
-            print(value)
-            while not end_of_game:
-                continue
-        elif option == "Q":
-            print("Come back soon!")
-            exit()
-        else:
-            print("Invalid option. Please select a valid one!")
+    option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
+    option = option.upper()
+    if option == "H":
+        os.system('clear')
+        print("HIGH SCORES!!")
+        s_count, ss = fetch_scores()
+        display_scores(s_count, ss)
+    elif option == "P":
+        os.system('clear')
+        print("Starting a new round!")
+        print("Use the buttons on the Pi to make and submit your guess!")
+        print("Press and hold the guess button to cancel your game")
+        value = generate_number()
+        print(value)
+        while not end_of_game:
+            pass
+    elif option == "Q":
+        print("Come back soon!")
+        exit()
+    else:
+        print("Invalid option. Please select a valid one!")
 
 
 def display_scores(count, raw_data):
@@ -223,6 +222,7 @@ def addScore(scores, newScore):
 def btn_guess_pressed(channel):
     global number_of_tries
     global _guess
+    global eeprom_scores
     global value
     start_time = time.time()
     while GPIO.input(channel) == 0: # Wait for the button up
@@ -257,6 +257,9 @@ def btn_guess_pressed(channel):
                 save_scores([name[:3],number_of_tries])
                 end_of_game = True 
                 print("Done with round")
+                the_scores_count, the_scores = fetch_scores()
+                print(the_scores)
+                print(eeprom_scores)
                 pass
                 #store the scores on the eeprom
         else:
