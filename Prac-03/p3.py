@@ -24,36 +24,36 @@ number_of_tries = 0
 PWM_LED = 12
 
 
-# def btn_increase_pressed(channel):
+def btn_increase_pressed(channel):
     
-#     global _guess
+    global _guess
     
-#     if _guess == 0:
-#         GPIO.output([22,27,17], GPIO.LOW)
-#     elif _guess == 1:
-#         GPIO.output(22, GPIO.HIGH)
-#     elif _guess == 2:
-#         GPIO.output(27, GPIO.HIGH)
-#         GPIO.output(22, GPIO.LOW)
-#     elif _guess == 3:
-#         GPIO.output([27, 22], GPIO.HIGH)
-#     elif _guess == 4:
-#         GPIO.output([27, 22], GPIO.LOW)
-#         GPIO.output(17, GPIO.HIGH)
-#     elif _guess == 5:
-#         GPIO.output(22, GPIO.HIGH)
-#     elif _guess == 6:
-#         GPIO.output(22, GPIO.LOW) 
-#         GPIO.output(27, GPIO.HIGH)
-#     elif _guess == 7:
-#         GPIO.output(22, GPIO.HIGH)
-#     print(_guess)
-#     if _guess < 7: 
-#         _guess += 1
-#         print("increment "+str(_guess))
-#     else:
-#         _guess = 0
-#     pass
+    if _guess == 0:
+        GPIO.output([22,27,17], GPIO.LOW)
+    elif _guess == 1:
+        GPIO.output(22, GPIO.HIGH)
+    elif _guess == 2:
+        GPIO.output(27, GPIO.HIGH)
+        GPIO.output(22, GPIO.LOW)
+    elif _guess == 3:
+        GPIO.output([27, 22], GPIO.HIGH)
+    elif _guess == 4:
+        GPIO.output([27, 22], GPIO.LOW)
+        GPIO.output(17, GPIO.HIGH)
+    elif _guess == 5:
+        GPIO.output(22, GPIO.HIGH)
+    elif _guess == 6:
+        GPIO.output(22, GPIO.LOW) 
+        GPIO.output(27, GPIO.HIGH)
+    elif _guess == 7:
+        GPIO.output(22, GPIO.HIGH)
+    print(_guess)
+    if _guess < 7: 
+        _guess += 1
+        print("increment "+str(_guess))
+    else:
+        _guess = 0
+    pass
 
 # Print the game banner
 def welcome():
