@@ -255,6 +255,7 @@ def btn_guess_pressed(channel):
                 #add name to the scores
                 save_scores([name[:3],number_of_tries])
                 end_of_game = True 
+                print("Done with round")
                 pass
                 #store the scores on the eeprom
         else:
@@ -275,10 +276,12 @@ def accuracy_leds():
     # - If they guessed 7, the brightness would be at ((8-7)/(8-6)*100 = 50%
     if _guess>value:
         brightness = ((8-_guess)/(8-value))
-    elif value==0 and _guess!=0:
+    elif value==0 and _guess!=value:
         brightness = (_guess)/8
-    else:
+    elif _guess<value:
         brightness = (8-value)/(8-_guess)
+    elif _guess==value:
+        brightness = 0
     dc = brightness*100
     print(dc)
     pi_pwm.ChangeDutyCycle(dc)
