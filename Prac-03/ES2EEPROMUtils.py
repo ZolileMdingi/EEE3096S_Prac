@@ -136,7 +136,7 @@ def getName(nameChars):
     return name
 def fetch_scores(eeprom):
     #read block 0, 1 register
-    score_count = eeprom.read_block(0,1)
+    score_count = eeprom.read_block(0,4)
     print("score_count",score_count)
     
     #scores_raw = eeprom.read_block(1,score_count[0])
