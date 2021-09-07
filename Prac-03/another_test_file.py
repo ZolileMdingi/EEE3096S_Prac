@@ -19,11 +19,11 @@ GPIO.setup(GUESS_BTN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 LEDS = [17,27,22]
 GPIO.setup(LEDS, GPIO.OUT)
 print("the random number is ",random_generated_number)
-while not GPIO.input(23) == GPIO.LOW:
-    GPIO.output(LEDS, GPIO.HIGH)
+# while not GPIO.input(23) == GPIO.LOW:
+#     GPIO.output(LEDS, GPIO.HIGH)
 
 print("button was pressed")
-_guess = 0
+_guess = -1
 PWM_LED = 12
 # BUZZER = 13
 # GPIO.setup(13,GPIO.OUT)
@@ -41,7 +41,7 @@ def btn_increase_pressed(channel):
         _guess += 1
         print("increment "+str(_guess))
     else:
-        _guess = 0
+        _guess = -1
     if _guess == 0:
         GPIO.output([22,27,17], GPIO.LOW)
     elif _guess == 1:
