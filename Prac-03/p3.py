@@ -161,7 +161,7 @@ def save_scores(newScore):
     # update total amount of scores
     # write new scores
     oldScoreCount, oldScore = fetch_scores()
-    oldSScore.append(newScore)
+    oldScore.append(newScore)
     oldScore.sort(key=lambda x: x[1])
     data_to_write = []
     for score in oldScore:
