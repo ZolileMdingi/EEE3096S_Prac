@@ -25,11 +25,7 @@ PWM_LED = 12
 def btn_increase_pressed(channel):
     
     global _guess
-    if _guess < 7: 
-        _guess += 1
-        print("increment "+str(_guess))
-    else:
-        _guess = 0
+    
     if _guess == 0:
         GPIO.output([22,27,17], GPIO.LOW)
     elif _guess == 1:
@@ -50,7 +46,11 @@ def btn_increase_pressed(channel):
     elif _guess == 7:
         GPIO.output(22, GPIO.HIGH)
     print(_guess)
-    
+    if _guess < 7: 
+        _guess += 1
+        print("increment "+str(_guess))
+    else:
+        _guess = 0
     pass
 
 # Print the game banner
