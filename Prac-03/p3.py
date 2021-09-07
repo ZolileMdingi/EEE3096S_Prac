@@ -270,6 +270,7 @@ def btn_guess_pressed(channel):
             _guess=0
             accuracy_leds()
     elif 2 <= buttonTime:
+        print("took a lil sip")
         end_of_game = True   
     print("game done")   
     pass
