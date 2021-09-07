@@ -31,11 +31,38 @@ GPIO.output(13,0)
 GPIO.setup(PWM_LED, GPIO.OUT)
 pi_pwm = GPIO.PWM(PWM_LED, 1000)
 pi_pwm.start(100)
-GPIO.add_event_detect(GUESS_BTN,GPIO.RISING)
+GPIO.add_event_detect(GUESS_BTN,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
+# GPIO.add_event_detect(GUESS_BTN,GPIO.RISING)
 GPIO.add_event_detect(SUBMIT_GUESS, GPIO.RISING)
+def btn_increase_pressed(channel):
+    if _guess == 0:
+        GPIO.output([22,27,17], GPIO.LOW)
+    elif _guess == 1:
+        GPIO.output(22, GPIO.HIGH)
+    elif _guess == 2:
+        GPIO.output(27, GPIO.HIGH)
+        GPIO.output(22, GPIO.LOW)
+    elif _guess == 3:
+        GPIO.output([27, 22], GPIO.HIGH)
+    elif _guess == 4:
+        GPIO.output([27, 22], GPIO.LOW)
+        GPIO.output(17, GPIO.HIGH)
+    elif _guess == 5:
+        GPIO.output(22, GPIO.HIGH)
+    elif _guess == 6:
+        GPIO.output(22, GPIO.LOW) 
+        GPIO.output(27, GPIO.HIGH)
+    elif _guess == 7:
+        GPIO.output(22, GPIO.HIGH)
+    print(_guess)
+    if _guess < 7: 
+        _guess += 1
+        print("increment "+str(_guess))
+    else:
+        _guess = 0
 try:
     while True:
-            if GPIO.event_detected(23):
+            if GPIO.event_detected(24):
             #while not GPIO.input(23) == GPIO.LOW:
                     time.sleep(0.5)
                     if _guess == 0:
