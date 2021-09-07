@@ -273,7 +273,7 @@ def accuracy_leds():
         brightness = (8-value)/(8-_guess)
     dc = brightness*100
     print(dc)
-    pi_pwm.ChangeDutyCycle(dc)
+    pi_pwm.ChangeDutyCycle(100-dc)
     pass
 
 # Sound Buzzer
