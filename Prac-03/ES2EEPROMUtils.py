@@ -116,7 +116,7 @@ class ES2EEPROM:
         """
 
         # First 4 bytes contain how many scores there are
-        self.write_block(1, [8])
+        self.write_block(0x0, [8])
         scores = [["jtf", 9], ["dev", 10], ["Lju", 3], ["EuE", 6],["jth", 1], ["hjk", 11], ["xju", 4], ["hgc", 2]]
         scores.sort(key=lambda x: x[1])
         print(scores)
@@ -127,7 +127,7 @@ class ES2EEPROM:
                 data_to_write.append(ord(letter))
             data_to_write.append(score[1])
         print(data_to_write)
-        self.write_block(2, data_to_write)
+        self.write_block(0x1, data_to_write)
         
 def getName(nameChars):
     name = ''
@@ -135,10 +135,10 @@ def getName(nameChars):
         name = name + chr(x)
     return name
 def fetch_scores(eeprom):
-    score_count = eeprom.read_block(1,1)
+    score_count = eeprom.read_block(0x0,1)
     print("score_count",score_count)
     score_count = 8
-    scores_raw = eeprom.read_block(2,32)
+    scores_raw = eeprom.read_block(0x1,32)
     print("the raw scores",scores_raw)
     scores = []
     for x in range(0, score_count*4,4):
