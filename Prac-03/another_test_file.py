@@ -105,8 +105,11 @@ try:
                     if _guess == random_generated_number:
                             break
                     else:
-                            dc = (abs(_guess-1-random_generated_number)*100)//random_generated_number
-                            dc =  int(dc)
+                            if _guess>value:
+                                brightness = ((8-_guess)/(8-value))
+                            else:
+                                brightness = _guess/value
+                            dc = brightness*100
                             print(dc)
                             pi_pwm.ChangeDutyCycle(dc)
 except KeyboardInterrupt:
