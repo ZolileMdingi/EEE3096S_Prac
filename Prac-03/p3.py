@@ -68,6 +68,7 @@ def welcome():
 
 # Print the game menu
 def menu():
+    global value
     global end_of_game
     option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
     option = option.upper()
@@ -82,6 +83,7 @@ def menu():
         print("Use the buttons on the Pi to make and submit your guess!")
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
+        print(value)
         while not end_of_game:
 #             btn_increase_pressed(channel)
             pass
