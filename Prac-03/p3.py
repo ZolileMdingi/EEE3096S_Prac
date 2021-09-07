@@ -17,9 +17,17 @@ BUZZER =13
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 scores = []
 _guess = 0
+value = 0
+number_of_tries = 0
 
 def btn_increase_pressed(channel):
+    
     global _guess
+    if _guess < 7: 
+        _guess += 1
+        print("increment "+str(_guess))
+    else:
+        _guess = 0
     if _guess == 0:
         GPIO.output([22,27,17], GPIO.LOW)
     elif _guess == 1:
@@ -40,11 +48,7 @@ def btn_increase_pressed(channel):
     elif _guess == 7:
         GPIO.output(22, GPIO.HIGH)
     print(_guess)
-    if _guess < 7: 
-        _guess += 1
-        print("increment "+str(_guess))
-    else:
-        _guess = 0
+    
     pass
 
 # Print the game banner
@@ -110,7 +114,7 @@ def setup():
     GPIO.setup(SUBMIT_BTN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(GUESS_TOGGLE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(GUESS_BTN,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
-
+    GPIO.add_event_detect(SUBMIT_BTN,GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
     # Setup PWM channels
     GPIO.setup(PWM_LED, GPIO.OUT)
     # Setup debouncing and callbacks
@@ -177,6 +181,11 @@ def addScore(scores, newScore):
     
 # Guess button
 def btn_guess_pressed(channel):
+    
+    start_time = time.time()
+    while GPIO.input(channel) == 0: # Wait for the button up
+        pass
+    buttonTime = time.time() - start_time
     # If they've pressed and held the button, clear up the GPIO and take them back to the menu screen
     # Compare the actual value with the user value displayed on the LEDs
     # Change the PWM LED
@@ -188,24 +197,23 @@ def btn_guess_pressed(channel):
     # - add the new score
     # - sort the scores
     # - Store the scores back to the EEPROM, being sure to update the score count
-    while 1:
-        number_of_tries = 0
-        if _guess == rand_gen:
-            #disable LEDS
-            GPIO.output(LEDS, GPIO)
-            #disable buzzer
+    if .1 <= buttonTime < 2:
+        number_of_tries += 1
+        if _guess-1 == value:
+                #disable LEDS
+                GPIO.output(LEDS, GPIO.LOW)
+                #disable buzzer
 
-            #user name
-            name = input("Enter your name: ")
-            #fetch scores 
+                #user name
+                name = input("Enter your name: ")
+                #fetch scores 
 
-            #add name to the scores
-            addScore(scores, [name[:3],number_of tries])
-            scores.sort(key=lambda x: x[1])
-            #store the scores on the eeprom
-        
-        
-        
+                #add name to the scores
+                addScore(scores, [name[:3],number_of tries])
+                scores.sort(key=lambda x: x[1])
+                #store the scores on the eeprom       
+    elif 2 <= buttonTime:
+        end_of_game = True      
     pass
 
 
