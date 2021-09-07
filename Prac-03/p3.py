@@ -87,7 +87,6 @@ def menu():
         value = generate_number()
         print(value)
         while not end_of_game:
-#             btn_increase_pressed(channel)
             pass
     elif option == "Q":
         print("Come back soon!")
@@ -151,17 +150,19 @@ def fetch_scores():
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
     return score_count, scores
 
-
+def toRaw():
+    pass
 
 # Save high scores
 def save_scores(newScore):
+    print("Saved scores", newScore)
     # fetch scores
     # include new score
     # sort
     # update total amount of scores
     # write new scores
     oldScoreCount, oldScore = fetch_scores()
-    oldSScore.append(newScore)
+    oldScore.append(newScore)
     oldScore.sort(key=lambda x: x[1])
     data_to_write = []
     for score in oldScore:
@@ -173,6 +174,7 @@ def save_scores(newScore):
     # eeprom.clear((oldScoreCount+1)*32)
     # eeprom.write_block(0xff, [oldScoreCount+1])
     # eeprom.write_block(1, data_to_write)
+    print("save done")
     pass
 
 
@@ -220,6 +222,7 @@ def addScore(scores, newScore):
 def btn_guess_pressed(channel):
     global number_of_tries
     global _guess
+    global eeprom_scores
     global value
     start_time = time.time()
     while GPIO.input(channel) == 0: # Wait for the button up
@@ -247,21 +250,25 @@ def btn_guess_pressed(channel):
                 GPIO.output(LEDS, GPIO.LOW)
                 accuracy_leds()
                 #disable buzzer
-
                 #user name
                 name = input("Enter your name: ")
                 #fetch scores 
-
                 #add name to the scores
-                addScore(scores, [name[:3],number_of_tries])
-                scores.sort(key=lambda x: x[1])
+                save_scores([name[:3],number_of_tries])
+                end_of_game = True 
+                print("Done with round")
+                the_scores_count, the_scores = fetch_scores()
+                print(the_scores)
+                print(eeprom_scores)
+                pass
                 #store the scores on the eeprom
         else:
             GPIO.output([22,27,17], GPIO.LOW)
             _guess=0
             accuracy_leds()
     elif 2 <= buttonTime:
-        end_of_game = True      
+        end_of_game = True   
+    print("game done")   
     pass
 
 
@@ -274,10 +281,12 @@ def accuracy_leds():
     # - If they guessed 7, the brightness would be at ((8-7)/(8-6)*100 = 50%
     if _guess>value:
         brightness = ((8-_guess)/(8-value))
-    elif value==0 and _guess!=0:
+    elif value==0 and _guess!=value:
         brightness = (_guess)/8
-    else:
+    elif _guess<value:
         brightness = (8-value)/(8-_guess)
+    elif _guess==value:
+        brightness = 0
     dc = brightness*100
     print(dc)
     pi_pwm.ChangeDutyCycle(dc)
@@ -300,6 +309,7 @@ if __name__ == "__main__":
         setup()
         welcome()
         while True:
+            print("starting")
             menu()
             pass
     except Exception as e:
