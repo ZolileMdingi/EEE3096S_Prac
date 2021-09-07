@@ -155,6 +155,7 @@ def toRaw():
 
 # Save high scores
 def save_scores(newScore):
+    print("Saved scores", newScore)
     # fetch scores
     # include new score
     # sort
