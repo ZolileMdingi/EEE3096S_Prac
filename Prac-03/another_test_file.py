@@ -108,7 +108,7 @@ try:
                             if _guess>random_generated_number:
                                 brightness = ((8-_guess)/(8-random_generated_number))
                             else:
-                                brightness = _guess/random_generated_number
+                                brightness = ((8-random_generated_number)/8-_guess))
                             dc = brightness*100
                             print(dc)
                             pi_pwm.ChangeDutyCycle(dc)
