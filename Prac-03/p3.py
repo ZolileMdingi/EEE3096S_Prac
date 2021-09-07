@@ -87,7 +87,6 @@ def menu():
         value = generate_number()
         print(value)
         while not end_of_game:
-#             btn_increase_pressed(channel)
             pass
     elif option == "Q":
         print("Come back soon!")
@@ -151,7 +150,8 @@ def fetch_scores():
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
     return score_count, scores
 
-
+def toRaw():
+    pass
 
 # Save high scores
 def save_scores(newScore):
@@ -247,14 +247,12 @@ def btn_guess_pressed(channel):
                 GPIO.output(LEDS, GPIO.LOW)
                 accuracy_leds()
                 #disable buzzer
-
                 #user name
                 name = input("Enter your name: ")
                 #fetch scores 
-
                 #add name to the scores
-                addScore(scores, [name[:3],number_of_tries])
-                scores.sort(key=lambda x: x[1])
+                save_scores([name[:3],number_of_tries])
+                end_of_game = True 
                 #store the scores on the eeprom
         else:
             GPIO.output([22,27,17], GPIO.LOW)
