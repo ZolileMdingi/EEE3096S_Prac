@@ -116,7 +116,7 @@ class ES2EEPROM:
         """
 
         # First 4 bytes contain how many scores there are
-        self.write_block(0x0, [4])
+        self.write_block(0x0, [5])
         scores = [["jtf", 9], ["dev", 10], ["Lju", 3], ["EuE", 6]]#,["jth", 1], ["hjk", 11], ["xju", 4], ["hgc", 2]]
         scores.sort(key=lambda x: x[1])
         print(scores)
