@@ -114,7 +114,7 @@ def setup():
     
     # LEDs 
     GPIO.setup(LEDS, GPIO.OUT)
-
+    GPIO.output(LEDS, GPIO.LOW)
     #Buttons
     GPIO.setup(SUBMIT_BTN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(GUESS_TOGGLE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
