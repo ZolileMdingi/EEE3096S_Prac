@@ -141,7 +141,7 @@ def fetch_scores(eeprom):
     scores_raw = eeprom.read_block(1,score_count[0])
     print("the raw scores",scores_raw)
     scores = []
-    for x in range(0, score_count*4,4):
+    for x in range(0, score_count[0]*4,4):
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
     print("the scores", scores)
     return scores
