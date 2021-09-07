@@ -174,6 +174,7 @@ def save_scores(newScore):
     # eeprom.clear((oldScoreCount+1)*32)
     # eeprom.write_block(0xff, [oldScoreCount+1])
     # eeprom.write_block(1, data_to_write)
+    print("save done")
     pass
 
 
@@ -254,6 +255,7 @@ def btn_guess_pressed(channel):
                 #add name to the scores
                 save_scores([name[:3],number_of_tries])
                 end_of_game = True 
+                pass
                 #store the scores on the eeprom
         else:
             GPIO.output([22,27,17], GPIO.LOW)
