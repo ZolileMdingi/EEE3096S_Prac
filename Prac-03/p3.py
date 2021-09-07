@@ -15,40 +15,38 @@ SUBMIT_BTN = 24
 GUESS_TOGGLE = 23
 BUZZER =13
 eeprom = ES2EEPROMUtils.ES2EEPROM()
-
+scores = []
 _guess = 0
 
 def btn_increase_pressed(channel):
+    if GPIO.event_detected(channel):
+        time.sleep(0.5)
+        if _guess == 0:
+            GPIO.output([22,27,17], GPIO
+        elif _guess == 1:
+            GPIO.output(22, GPIO.HIGH)
+        elif _guess == 2:
+            GPIO.output(27, GPIO.HIGH)
+            GPIO.output(22, GPIO.LOW)
+        elif _guess == 3:
+            GPIO.output([27, 22], GPIO.HIGH)
+        elif _guess == 4:
+            GPIO.output([27, 22], GPIO.LOW)
+            GPIO.output(17, GPIO.HIGH)
+        elif _guess == 5:
+            GPIO.output(22, GPIO.HIGH)
+        elif _guess == 6:
+            GPIO.output(22, GPIO.LOW) 
+            GPIO.output(27, GPIO.HIGH)
+        elif _guess == 7:
+            GPIO.output(22, GPIO.HIGH)
+            print(_guess)
+        if _guess < 7: 
+            _guess += 1
+            print("increment "+str(_guess))
+        else:
+            _guess = 0
     pass
-#     if GPIO.event_detected(channel):
-#         time.sleep(0.5)
-#         if _guess == 0:
-#             GPIO.output([22,27,17], GPIO
-#         elif _guess == 1:
-#             GPIO.output(22, GPIO.HIGH)
-#         elif _guess == 2:
-#             GPIO.output(27, GPIO.HIGH)
-#             GPIO.output(22, GPIO.LOW)
-#         elif _guess == 3:
-#             GPIO.output([27, 22], GPIO.HIGH)
-#         elif _guess == 4:
-#             GPIO.output([27, 22], GPIO.LOW)
-#             GPIO.output(17, GPIO.HIGH)
-#         elif _guess == 5:
-#             GPIO.output(22, GPIO.HIGH)
-#         elif _guess == 6:
-#             GPIO.output(22, GPIO.LOW) 
-#             GPIO.output(27, GPIO.HIGH)
-#         elif _guess == 7:
-#             GPIO.output(22, GPIO.HIGH)
-#             print(_guess)
-#         if _guess < 7: 
-#             _guess += 1
-#             print("increment "+str(_guess))
-#         else:
-#             _guess = 0
-
-
 
 # Print the game banner
 def welcome():
@@ -80,6 +78,7 @@ def menu():
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
         while not end_of_game:
+#             btn_increase_pressed(channel)
             pass
     elif option == "Q":
         print("Come back soon!")
@@ -111,6 +110,7 @@ def setup():
     #Buttons
     GPIO.setup(SUBMIT_BTN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(GUESS_TOGGLE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(GUESS_BTN,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
 
     # Setup PWM channels
     GPIO.setup(PWM_LED, GPIO.OUT)
@@ -172,7 +172,10 @@ def btn_increase_pressed(channel):
     # or just pull the value off the LEDs when a user makes a guess
     pass
 
-
+#
+def addScore(scores, newScore):
+    scores.append(newScore)
+    
 # Guess button
 def btn_guess_pressed(channel):
     # If they've pressed and held the button, clear up the GPIO and take them back to the menu screen
@@ -186,6 +189,24 @@ def btn_guess_pressed(channel):
     # - add the new score
     # - sort the scores
     # - Store the scores back to the EEPROM, being sure to update the score count
+    while 1:
+        number_of_tries = 0
+        if _guess == rand_gen:
+            #disable LEDS
+            GPIO.output(LEDS, GPIO)
+            #disable buzzer
+
+            #user name
+            name = input("Enter your name: ")
+            #fetch scores 
+
+            #add name to the scores
+            addScore(scores, [name[:3],number_of tries])
+            scores.sort(key=lambda x: x[1])
+            #store the scores on the eeprom
+        
+        
+        
     pass
 
 
