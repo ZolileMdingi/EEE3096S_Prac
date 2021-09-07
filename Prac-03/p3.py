@@ -219,7 +219,7 @@ def btn_guess_pressed(channel):
                 #fetch scores 
 
                 #add name to the scores
-                addScore(scores, [name[:3],number_of tries])
+                addScore(scores, [name[:3],number_of_tries])
                 scores.sort(key=lambda x: x[1])
                 #store the scores on the eeprom
         else:
