@@ -148,10 +148,10 @@ def fetch_scores(eeprom):
 
 if __name__ == "__main__":
     eeprom = ES2EEPROM()
-    eeprom.clear(4096)
-    sleep(0.5)
-    eeprom.populate_mock_scores()
-    sleep(0.1)
+    eeprom.clear(16384)
+    # sleep(0.5)
+    # eeprom.populate_mock_scores()
+    # sleep(0.1)
     print(fetch_scores(eeprom))
     
 
