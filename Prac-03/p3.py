@@ -117,7 +117,7 @@ def setup():
     #Buttons
     GPIO.setup(SUBMIT_BTN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(GUESS_TOGGLE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(GUESS_BTN,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
+    GPIO.add_event_detect(GUESS_TOGGLE,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
     GPIO.add_event_detect(SUBMIT_BTN,GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
     # Setup PWM channels
     GPIO.setup(PWM_LED, GPIO.OUT)
