@@ -17,7 +17,7 @@ GUESS_TOGGLE = 23
 BUZZER =13
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 scores = []
-eeprom_scores
+eeprom_scores =[76, 106, 117, 3, 69, 117, 69, 6, 106, 116, 102, 9, 100, 101, 118, 10]
 _guess = 0
 value = 0
 number_of_tries = 0
