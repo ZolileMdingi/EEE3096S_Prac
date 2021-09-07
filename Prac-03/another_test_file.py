@@ -28,9 +28,9 @@ while not GPIO.input(23) == GPIO.LOW:
 print("button was pressed")
 _guess = 0
 PWM_LED = 12 # The Red LED for indicating if the value submitted is correct, also its controlled by PWM for brightness
-BUZZER = 13 # GPIO pin for the buzzer
-GPIO.setup(13,GPIO.OUT)
-GPIO.output(13,0)
+BUZZER = 19 # GPIO pin for the buzzer
+GPIO.setup(19,GPIO.OUT)
+GPIO.output(19,0)
 GPIO.setup(PWM_LED, GPIO.OUT)
 pi_pwm = GPIO.PWM(PWM_LED, 1000) # The Frequency is set to 1000Hz for the LED pin
 pi_pwm.start(100) # I am guessing this start the duty cycle at 100
