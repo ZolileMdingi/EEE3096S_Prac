@@ -35,11 +35,11 @@ GPIO.setup(PWM_LED, GPIO.OUT)
 pi_pwm = GPIO.PWM(PWM_LED, 1000) # The Frequency is set to 1000Hz for the LED pin
 pi_pwm.start(100) # I am guessing this start the duty cycle at 100
 
-buzzer_pwm = GPIO.PWM(BUZZER, 2)
-time.sleep(0.5)
-buzzer_pwm.start(50)
-time.sleep(0.5)
-buzzer_pwm.ChangeFrequency(2)
+#buzzer_pwm = GPIO.PWM(BUZZER, 2)
+#time.sleep(0.5)
+#buzzer_pwm.start(50)
+#time.sleep(0.5)
+#buzzer_pwm.ChangeFrequency(2)
 # What does this do?
 GPIO.add_event_detect(GUESS_BTN,GPIO.RISING)
 GPIO.add_event_detect(SUBMIT_GUESS, GPIO.RISING)
