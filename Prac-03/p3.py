@@ -240,6 +240,7 @@ def btn_guess_pressed(channel):
         if _guess == value:
                 #disable LEDS
                 GPIO.output(LEDS, GPIO.LOW)
+                accuracy_leds()
                 #disable buzzer
 
                 #user name
