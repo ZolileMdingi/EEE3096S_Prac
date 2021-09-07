@@ -116,7 +116,7 @@ class ES2EEPROM:
         """
 
         # First 4 bytes contain how many scores there are
-        self.write_byte(0xff, 11)
+        self.write_byte(0xfe, 11)
         scores = [["jtf", 9], ["dev", 10], ["Lju", 3], ["EuE", 6]]#,["jth", 1], ["hjk", 11], ["xju", 4], ["hgc", 2]]
         scores.sort(key=lambda x: x[1])
         print(scores)
@@ -136,7 +136,7 @@ def getName(nameChars):
     return name
 def fetch_scores(eeprom):
     #read block 0, 1 register
-    score_count = eeprom.read_block(0xff,1)
+    score_count = eeprom.read_block(0xfe,1)
     print("score_count",score_count)
     
     #scores_raw = eeprom.read_block(1,score_count[0])
