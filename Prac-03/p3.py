@@ -6,7 +6,7 @@ import os
 
 # some global variables that need to change as we run the program
 end_of_game = None  # set if the user wins or ends the game
-
+pi_pwm = None
 # DEFINE THE PINS USED HERE
 
 LEDS = [17,27,22]
@@ -19,6 +19,8 @@ scores = []
 _guess = 0
 value = 0
 number_of_tries = 0
+PWM_LED = 12
+
 
 def btn_increase_pressed(channel):
     
@@ -117,6 +119,8 @@ def setup():
     GPIO.add_event_detect(SUBMIT_BTN,GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
     # Setup PWM channels
     GPIO.setup(PWM_LED, GPIO.OUT)
+    pi_pwm = GPIO.PWM(PWM_LED, 1000)
+    pi_pwm.start(0)
     # Setup debouncing and callbacks
     pass
 
@@ -199,7 +203,11 @@ def btn_guess_pressed(channel):
     # - Store the scores back to the EEPROM, being sure to update the score count
     if .1 <= buttonTime < 2:
         number_of_tries += 1
-        if _guess-1 == value:
+        if _guess ==0:
+            _guess = 7 
+        else:
+            _guess -= 1
+        if _guess == value:
                 #disable LEDS
                 GPIO.output(LEDS, GPIO.LOW)
                 #disable buzzer
@@ -211,7 +219,9 @@ def btn_guess_pressed(channel):
                 #add name to the scores
                 addScore(scores, [name[:3],number_of tries])
                 scores.sort(key=lambda x: x[1])
-                #store the scores on the eeprom       
+                #store the scores on the eeprom
+        else:
+            accuracy_leds()
     elif 2 <= buttonTime:
         end_of_game = True      
     pass
@@ -223,6 +233,13 @@ def accuracy_leds():
     # - The % brightness should be directly proportional to the % "closeness"
     # - For example if the answer is 6 and a user guesses 4, the brightness should be at 4/6*100 = 66%
     # - If they guessed 7, the brightness would be at ((8-7)/(8-6)*100 = 50%
+    if _guess>value:
+        brightness = ((8-_guess)/(8-value))
+    else:
+        brightness = _guess/value
+    dc = brightness*100
+    print(dc)
+    pi_pwm.ChangeDutyCycle(dc)
     pass
 
 # Sound Buzzer
