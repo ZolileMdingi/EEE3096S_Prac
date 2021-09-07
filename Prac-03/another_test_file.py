@@ -23,7 +23,7 @@ print("the random number is ",random_generated_number)
 #     GPIO.output(LEDS, GPIO.HIGH)
 
 print("button was pressed")
-_guess = -1
+_guess = 0
 PWM_LED = 12
 # BUZZER = 13
 # GPIO.setup(13,GPIO.OUT)
