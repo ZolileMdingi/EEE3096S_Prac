@@ -89,6 +89,7 @@ def menu():
         print(value)
         while not end_of_game:
             pass
+        print("we still here")
         welcome()
     elif option == "Q":
         print("Come back soon!")
