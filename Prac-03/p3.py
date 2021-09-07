@@ -243,6 +243,7 @@ def btn_guess_pressed(channel):
     # - Store the scores back to the EEPROM, being sure to update the score count
     if .1 <= buttonTime < 2:
         number_of_tries += 1
+        print("theguess is: ",_guess)
         if _guess ==7:
             _guess = 7 
         else:
