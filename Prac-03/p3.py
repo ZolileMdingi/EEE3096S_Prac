@@ -108,6 +108,7 @@ def display_scores(count, raw_data):
 
 # Setup Pins
 def setup():
+    global pi_pwm
     # Setup board mode
     GPIO.setmode(GPIO.BCM) # The Board has been set to the Broadcom set up, which is what the chip that powers the pi use.
     # Setup regular GPIO
@@ -258,6 +259,7 @@ def btn_guess_pressed(channel):
 
 # LED Brightness
 def accuracy_leds():
+    global pi_pwm
     # Set the brightness of the LED based on how close the guess is to the answer
     # - The % brightness should be directly proportional to the % "closeness"
     # - For example if the answer is 6 and a user guesses 4, the brightness should be at 4/6*100 = 66%
