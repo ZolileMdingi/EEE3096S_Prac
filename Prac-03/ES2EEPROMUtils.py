@@ -139,7 +139,8 @@ def fetch_scores(eeprom):
     score_count = eeprom.read_block(0xff,1)
     print("score_count",score_count)
     
-    scores_raw = eeprom.read_block(1,score_count[0])
+    #scores_raw = eeprom.read_block(1,score_count[0])
+    scores_raw = eeprom.read_block(1,16)
     print("the raw scores",scores_raw)
     scores = []
     #for x in range(0, score_count[0]*4,4):
