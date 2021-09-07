@@ -72,6 +72,7 @@ def welcome():
 def menu():
     global value
     global end_of_game
+    
     option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
     option = option.upper()
     if option == "H":
@@ -263,7 +264,8 @@ def btn_guess_pressed(channel):
             _guess=0
             accuracy_leds()
     elif 2 <= buttonTime:
-        end_of_game = True      
+        end_of_game = True   
+    print("game done")   
     pass
 
 
@@ -304,6 +306,7 @@ if __name__ == "__main__":
         setup()
         welcome()
         while True:
+            print("starting")
             menu()
             pass
     except Exception as e:
