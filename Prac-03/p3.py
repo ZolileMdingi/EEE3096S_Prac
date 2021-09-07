@@ -17,6 +17,7 @@ GUESS_TOGGLE = 23
 BUZZER =13
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 scores = []
+eeprom_scores
 _guess = 0
 value = 0
 number_of_tries = 0
@@ -136,15 +137,17 @@ def getName(nameChars):
 
 # Load high scores
 def fetch_scores():
+    global eeprom_scores
     # get however many scores there are
     score_count = None
     # Get the scores
     # convert the codes back to ascii
     # return back the results
-    score_count = eeprom.read_block(0xff,1)[0]
-    scores_raw = eeprom.read_block(1,score_count*4)
+    # score_count = eeprom.read_block(0xff,1)[0]
+    # scores_raw = eeprom.read_block(1,score_count*4)
+    scores_raw = eeprom_scores
     scores = []
-    for x in range(0, score_count*4,4):
+    for x in range(0, len(scores_raw),4):
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
     return score_count, scores
 
@@ -165,9 +168,11 @@ def save_scores(newScore):
         for letter in score[0]:
             data_to_write.append(ord(letter))
         data_to_write.append(score[1])
-    eeprom.clear((oldScoreCount+1)*32)
-    eeprom.write_block(0xff, [oldScoreCount+1])
-    eeprom.write_block(1, data_to_write)
+    # clear the eeprom to write new data to it.
+    eeprom_scores = data_to_write
+    # eeprom.clear((oldScoreCount+1)*32)
+    # eeprom.write_block(0xff, [oldScoreCount+1])
+    # eeprom.write_block(1, data_to_write)
     pass
 
 
