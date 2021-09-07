@@ -72,28 +72,28 @@ def welcome():
 def menu():
     global value
     global end_of_game
-    
-    option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
-    option = option.upper()
-    if option == "H":
-        os.system('clear')
-        print("HIGH SCORES!!")
-        s_count, ss = fetch_scores()
-        display_scores(s_count, ss)
-    elif option == "P":
-        os.system('clear')
-        print("Starting a new round!")
-        print("Use the buttons on the Pi to make and submit your guess!")
-        print("Press and hold the guess button to cancel your game")
-        value = generate_number()
-        print(value)
-        while not end_of_game:
-            pass
-    elif option == "Q":
-        print("Come back soon!")
-        exit()
-    else:
-        print("Invalid option. Please select a valid one!")
+    while True:
+        option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
+        option = option.upper()
+        if option == "H":
+            os.system('clear')
+            print("HIGH SCORES!!")
+            s_count, ss = fetch_scores()
+            display_scores(s_count, ss)
+        elif option == "P":
+            os.system('clear')
+            print("Starting a new round!")
+            print("Use the buttons on the Pi to make and submit your guess!")
+            print("Press and hold the guess button to cancel your game")
+            value = generate_number()
+            print(value)
+            while not end_of_game:
+                continue
+        elif option == "Q":
+            print("Come back soon!")
+            exit()
+        else:
+            print("Invalid option. Please select a valid one!")
 
 
 def display_scores(count, raw_data):
