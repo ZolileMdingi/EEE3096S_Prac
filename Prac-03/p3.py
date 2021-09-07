@@ -236,7 +236,7 @@ def accuracy_leds():
     if _guess>value:
         brightness = ((8-_guess)/(8-value))
     else:
-        brightness = _guess/value
+        brightness = (8-value)/(8-_guess)
     dc = brightness*100
     print(dc)
     pi_pwm.ChangeDutyCycle(dc)
