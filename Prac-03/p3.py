@@ -251,6 +251,8 @@ def btn_guess_pressed(channel):
                 scores.sort(key=lambda x: x[1])
                 #store the scores on the eeprom
         else:
+            GPIO.output([22,27,17], GPIO.LOW)
+            _guess=0
             accuracy_leds()
     elif 2 <= buttonTime:
         end_of_game = True      
