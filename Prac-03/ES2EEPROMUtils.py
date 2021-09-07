@@ -135,10 +135,10 @@ def getName(nameChars):
         name = name + chr(x)
     return name
 def fetch_scores(eeprom):
-    score_count = eeprom.read_byte(0xff)
+    score_count = eeprom.read_block(0xff,1)
     print("score_count",score_count)
     score_count = 8
-    scores_raw = eeprom.read_block(1,32)
+    scores_raw = eeprom.read_block(0,32)
     print("the raw scores",scores_raw)
     scores = []
     for x in range(0, score_count*4,4):
