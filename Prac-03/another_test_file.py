@@ -31,7 +31,7 @@ GPIO.output(13,0)
 GPIO.setup(PWM_LED, GPIO.OUT)
 pi_pwm = GPIO.PWM(PWM_LED, 1000)
 pi_pwm.start(100)
-GPIO.add_event_detect(GUESS_BTN,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
+
 # GPIO.add_event_detect(GUESS_BTN,GPIO.RISING)
 GPIO.add_event_detect(SUBMIT_GUESS, GPIO.RISING)
 def btn_increase_pressed(channel):
@@ -60,6 +60,7 @@ def btn_increase_pressed(channel):
         print("increment "+str(_guess))
     else:
         _guess = 0
+GPIO.add_event_detect(GUESS_BTN,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
 try:
     while True:
             if GPIO.event_detected(24):
