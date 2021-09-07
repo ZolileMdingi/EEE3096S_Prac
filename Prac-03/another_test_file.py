@@ -25,9 +25,9 @@ while not GPIO.input(23) == GPIO.LOW:
 print("button was pressed")
 _guess = 0
 PWM_LED = 12
-BUZZER = 13
-GPIO.setup(13,GPIO.OUT)
-GPIO.output(13,0)
+# BUZZER = 13
+# GPIO.setup(13,GPIO.OUT)
+# GPIO.output(13,0)
 GPIO.setup(PWM_LED, GPIO.OUT)
 pi_pwm = GPIO.PWM(PWM_LED, 1000)
 pi_pwm.start(100)
