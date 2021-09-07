@@ -127,7 +127,7 @@ class ES2EEPROM:
                 data_to_write.append(ord(letter))
             data_to_write.append(score[1])
         print(data_to_write)
-        self.write_block(0x1, data_to_write)
+        self.write_block(0x1, data_to_write[0:4])
         
 def getName(nameChars):
     name = ''
