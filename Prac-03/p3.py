@@ -260,7 +260,7 @@ def btn_guess_pressed(channel):
                 #fetch scores 
                 #add name to the scores
                 save_scores([name[:3],number_of_tries])
-                end_of_game = True 
+                end_of_game = False 
                 print("Done with round")
                 the_scores_count, the_scores = fetch_scores()
                 print(the_scores)
@@ -273,7 +273,7 @@ def btn_guess_pressed(channel):
             accuracy_leds()
     elif 2 <= buttonTime:
         print("took a lil sip")
-        end_of_game = True   
+        end_of_game = False   
     print("game done")   
     # pass
 
