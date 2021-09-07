@@ -269,6 +269,8 @@ def accuracy_leds():
     # - If they guessed 7, the brightness would be at ((8-7)/(8-6)*100 = 50%
     if _guess>value:
         brightness = ((8-_guess)/(8-value))
+    elif value==0 and _guess!=0:
+        brightness = (_guess)/8
     else:
         brightness = (8-value)/(8-_guess)
     dc = brightness*100
