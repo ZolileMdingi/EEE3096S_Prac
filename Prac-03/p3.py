@@ -213,6 +213,8 @@ def addScore(scores, newScore):
 # Guess button
 def btn_guess_pressed(channel):
     global number_of_tries
+    global _guess
+    global value
     start_time = time.time()
     while GPIO.input(channel) == 0: # Wait for the button up
         pass
