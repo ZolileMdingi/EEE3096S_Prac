@@ -23,9 +23,11 @@ def setup():
 def alertor():
   p.start(100)
   p.ChangeDutyCycle(100)
+  sleep(0.5)
 
 def stopAlertor():
   p.stop()
+  sleep(0.5)
 
 
 def loop():
