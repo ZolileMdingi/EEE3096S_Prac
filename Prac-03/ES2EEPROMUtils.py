@@ -122,4 +122,4 @@ if __name__ == "__main__":
     eeprom = ES2EEPROM()
     eeprom.clear(2048)
     eeprom.populate_mock_scores()
-    print(eeprom.read_block(0xff,1))
+    print(eeprom.read_byte(0x00))
