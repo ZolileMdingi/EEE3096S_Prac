@@ -1,16 +1,48 @@
 import RPi.GPIO as GPIO
-from time import sleep
+import time
+import math
 GPIO.setwarnings(False)
 
-GPIO.setmode(GPIO.BCM)
+buzzerPin = 13
+buttonPin = 24
+p = None
+def setup():
+  global buzzerPin
+  global buttonPin
+  global p
+  print ('Program is starting...')
+  GPIO.setmode(GPIO.BCM)
+  GPIO.setup(buzzerPin, GPIO.OUT)
+  p = GPIO.PWM(buzzerPin, 1)
+  GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+  p.start(0)
 
-buzzer = 13
-GPIO.setup(buzzer, GPIO.OUT)
+def alertor():
+  p.start(50)
+  for x in range(0,361):
+    sinVal = math.sin(x * (math.pi / 180.0))    
+    toneVal = 2000 + sinVal * 500
+    p.ChangeFrequency(toneVal)
+    time.sleep(0.001)
 
-while True:
-    GPIO.output(buzzer,GPIO.HIGH)
-    print("Beep")
-    sleep(0.5)
-    GPIO.output(buzzer,GPIO.LOW)
-    print("No Beep")
-    sleep(0.5)
+def stopAlertor():
+  p.stop()
+
+
+def loop():
+  while True:
+    if GPIO.input(buttonPin)==GPIO.LOW:
+      alertor()
+      print ('buzzer on ...')
+    else :
+      stopAlertor()
+      print ('buzzer off ...')
+def destroy():
+  GPIO.output(buzzerPin, GPIO.LOW)
+  GPIO.cleanup()
+if __name__ == '__main__':
+  setup()
+  try:
+    loop()
+  except KeyboardInterrupt:
+    destroy()
