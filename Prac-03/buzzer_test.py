@@ -26,7 +26,7 @@ def alertor():
     sinVal = math.sin(x * (math.pi / 180.0))    
     toneVal = 2000 + sinVal * 500
     p.ChangeFrequency(toneVal)
-    sleep(0.001)
+     sleep(0.001)
 
 def stopAlertor():
   p.stop()
