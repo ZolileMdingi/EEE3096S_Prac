@@ -3,15 +3,15 @@ import time
 import math
 GPIO.setwarnings(False)
 
-buzzerPin = 13
-buttonPin = 24
+buzzerPin = 33
+buttonPin = 18
 p = None
 def setup():
   global buzzerPin
   global buttonPin
   global p
   print ('Program is starting...')
-  GPIO.setmode(GPIO.BCM)
+  GPIO.setmode(GPIO.BOARD)
   GPIO.setup(buzzerPin, GPIO.OUT)
   p = GPIO.PWM(buzzerPin, 1)
   GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
