@@ -15,7 +15,7 @@ def setup():
   print ('Program is starting...')
   GPIO.setmode(GPIO.BOARD)
   GPIO.setup(buzzerPin, GPIO.OUT)
-  p = GPIO.PWM(buzzerPin, 1)
+  p = GPIO.PWM(buzzerPin, 100)
   GPIO.setup(buttonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
   p.start(0)
 
