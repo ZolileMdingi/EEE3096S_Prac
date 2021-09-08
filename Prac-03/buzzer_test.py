@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from gpiozero.tones import Tone
 from gpiozero import TonalBuzzer
-import time.sleep as sleep
+from time import sleep
 import math
 # GPIO.setwarnings(False)
 BuzzerPin = 13
