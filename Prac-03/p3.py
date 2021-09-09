@@ -286,6 +286,7 @@ def accuracy_leds():
     # - The % brightness should be directly proportional to the % "closeness"
     # - For example if the answer is 6 and a user guesses 4, the brightness should be at 4/6*100 = 66%
     # - If they guessed 7, the brightness would be at ((8-7)/(8-6)*100 = 50%
+    brightness = 0
     if _guess>value:
         brightness = ((8-_guess)/(8-value))
     elif value==0 and _guess!=value:
@@ -294,9 +295,8 @@ def accuracy_leds():
         brightness = (8-value)/(8-_guess)
     dc = brightness*100
     LED_PWM.ChangeDutyCycle(dc)
-    if _guess==value:
-        brightness = 0
-        dc = brightness*100
+    if brightness == 0:
+        dc = 0 
         LED_PWM.ChangeDutyCycle(dc)
         LED_PWM.stop()
     else:
