@@ -156,6 +156,8 @@ def fetch_scores():
     time.sleep(0.5)
     scores_raw = eeprom.read_block(1,score_count*4)
     # scores_raw = eeprom_scores
+    print("printing stuff")
+    print(scores_raw)
     scores = []
     for x in range(0, len(scores_raw),4):
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
