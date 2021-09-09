@@ -185,7 +185,7 @@ def save_scores(newScore):
     #eeprom_scores = data_to_write
     eeprom.clear((oldScoreCount+1)*32)
     time.sleep(0.1)
-    eeprom.write_block(0xff, [oldScoreCount+1])
+    eeprom.write_block(0x00, [oldScoreCount+1])
     time.sleep(0.1)
     eeprom.write_block(1, data_to_write)
     print("save done")
@@ -244,7 +244,6 @@ def btn_guess_pressed(channel):
                 print("Done with round")
                 the_scores_count, the_scores = fetch_scores()
                 print(the_scores)
-                print(eeprom_scores)
                 pass
                 #store the scores on the eeprom
         else:
