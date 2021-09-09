@@ -83,7 +83,7 @@ def menu():
         print("Use the buttons on the Pi to make and submit your guess!")
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
-        print(value)
+        print("The guess is now 7(LEDs all on)
         while not end_of_game:
             pass
         welcome()
@@ -151,47 +151,44 @@ def fetch_scores():
     # Get the scores
     # convert the codes back to ascii
     # return back the results
-    score_count = eeprom.read_byte(0x00)
-    print("scores stored: ",score_count)
+    score_count = eeprom.read_byte(0x00) #get number of scores
+    # print("scores stored: ",score_count)
     time.sleep(0.5)
-    scores_raw = eeprom.read_block(1,score_count*4)
+    scores_raw = eeprom.read_block(1,score_count*4) #read all data from eeprom
     # scores_raw = eeprom_scores
-    print("printing stuff")
-    print(scores_raw)
     scores = []
     for x in range(0, len(scores_raw),4):
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
     return score_count, scores
 
-def toRaw():
-    pass
+
 
 # Save high scores
 def save_scores(newScore):
     # global eeprom_scores
-    print("Saved scores", newScore)
     # fetch scores
     # include new score
     # sort
     # update total amount of scores
     # write new scores
-    oldScoreCount, oldScore = fetch_scores()
-    oldScore.append(newScore)
-    oldScore.sort(key=lambda x: x[1])
-    data_to_write = []
-    for score in oldScore:
+    oldScoresCount, oldScores = fetch_scores()
+    oldScores.append(newScore) #add the new score to the scores in the eeprom
+    oldScores.sort(key=lambda x: x[1])
+    data_to_write = [] #array to store <8bit values for each register in each block
+    #convert data for storage in eeprom
+    for score in oldScores:
         for letter in score[0]:
             data_to_write.append(ord(letter))
         data_to_write.append(score[1])
     # clear the eeprom to write new data to it.
-    #eeprom_scores = data_to_write
-    eeprom.clear((oldScoreCount+1)*32)
+    eeprom.clear((oldScoresCount+1)*32)
     time.sleep(0.1)
-    eeprom.write_block(0x00, [oldScoreCount+1])
+    #write number of scores
+    eeprom.write_block(0x00, [oldScoresCount+1])
     time.sleep(0.1)
+    #write scores to eeprom
     eeprom.write_block(1, data_to_write)
-    print("save done")
-    pass
+    pass 
 
 
 # Generate guess number
@@ -210,9 +207,11 @@ def btn_guess_pressed(channel):
     global _guess
     global eeprom_scores
     global value
+    # get start time the button is pressed
     start_time = time.time()
-    while GPIO.input(channel) == 0: # Wait for the button up
+    while GPIO.input(channel) == 0: # Wait for the button to be released
         pass
+    # difference between button is pressed and released
     buttonTime = time.time() - start_time
     # If they've pressed and held the button, clear up the GPIO and take them back to the menu screen
     # Compare the actual value with the user value displayed on the LEDs
@@ -225,9 +224,10 @@ def btn_guess_pressed(channel):
     # - add the new score
     # - sort the scores
     # - Store the scores back to the EEPROM, being sure to update the score count
-    if .1 <= buttonTime < 2:
-        number_of_tries += 1
-        print("the guess is: ",_guess)
+    if .1 <= buttonTime < 2: #if button press is less than 2 seconds
+        number_of_tries += 1 #number of guessess for current 
+        
+        #for our setup, we make this adjustment
         if _guess ==0:
             _guess = 7 
         else:
