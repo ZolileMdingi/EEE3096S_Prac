@@ -236,6 +236,7 @@ def btn_guess_pressed(channel):
                 #disable LEDS
                 GPIO.output(LEDS, GPIO.LOW)
                 accuracy_leds()
+                trigger_buzzer()
                 #disable buzzer
                 #user name
                 name = input("Enter your name: ")
