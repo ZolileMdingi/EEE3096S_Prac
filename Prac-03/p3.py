@@ -250,6 +250,7 @@ def btn_guess_pressed(channel):
             print("stab")
             accuracy_leds()
             trigger_buzzer()
+            _guess=0
     elif 2 <= buttonTime:
         print("took a lil sip")
         end_of_game = False   
