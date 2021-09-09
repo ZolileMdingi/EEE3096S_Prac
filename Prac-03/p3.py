@@ -103,7 +103,12 @@ def display_scores(count, raw_data):
     print("There are {} scores. Here are the top 3!".format(count))
     # print out the scores in the required format
     raw_data.sort(key=lambda x: x[1])
+    if count>2:
     for i in range(1,4):
+        data = raw_data[i-1]
+        print("{} - {} took {} guesses".format(i,data[0],data[1]))
+    else:
+    for i in range(1,count):
         data = raw_data[i-1]
         print("{} - {} took {} guesses".format(i,data[0],data[1]))
     pass
