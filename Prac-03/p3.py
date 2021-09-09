@@ -293,6 +293,8 @@ def btn_guess_pressed(channel):
 # LED Brightness
 def accuracy_leds():
     global LED_PWM
+    global _guess
+    global value
     # Set the brightness of the LED based on how close the guess is to the answer
     # - The % brightness should be directly proportional to the % "closeness"
     # - For example if the answer is 6 and a user guesses 4, the brightness should be at 4/6*100 = 66%
@@ -324,7 +326,8 @@ def trigger_buzzer():
     # If the user is off by an absolute value of 3, the buzzer should sound once every second
     # If the user is off by an absolute value of 2, the buzzer should sound twice every second
     # If the user is off by an absolute value of 1, the buzzer should sound 4 times a second
-    
+    print("guess ",_guess)
+    print("value ",value)
     print("we have spriti", abs(_guess-value))
     if abs(_guess-value)==3:
         print("diff is   :",abs(_guess-value))
