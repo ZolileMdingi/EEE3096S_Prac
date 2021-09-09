@@ -153,7 +153,7 @@ def fetch_scores():
     # convert the codes back to ascii
     # return back the results
     score_count = eeprom.read_byte(0x00)
-    sleep(0.5)
+    time.sleep(0.5)
     scores_raw = eeprom.read_block(1,score_count*4)
     # scores_raw = eeprom_scores
     scores = []
@@ -184,9 +184,9 @@ def save_scores(newScore):
     # clear the eeprom to write new data to it.
     #eeprom_scores = data_to_write
     eeprom.clear((oldScoreCount+1)*32)
-    sleep(0.1)
+    time.sleep(0.1)
     eeprom.write_block(0xff, [oldScoreCount+1])
-    sleep(0.1)
+    time.sleep(0.1)
     eeprom.write_block(1, data_to_write)
     print("save done")
     pass
