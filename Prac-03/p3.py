@@ -93,6 +93,37 @@ def setup():
     GPIO.add_event_detect(SUBMIT_BTN,GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
     pass
 
+
+
+# Print the game menu
+def menu():
+    global value
+    global end_of_game
+    option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
+    option = option.upper()
+    if option == "H":
+        os.system('clear')
+        print("HIGH SCORES!!")
+        s_count, ss = fetch_scores()
+        display_scores(s_count, ss)
+    elif option == "P":
+        setup()
+        os.system('clear')
+        print("Starting a new round!")
+        print("Use the buttons on the Pi to make and submit your guess!")
+        print("Press and hold the guess button to cancel your game")
+        value = generate_number()
+        print("The guess is now 7(LEDs all on)")
+        GPIO.output([11, 13, 15], GPIO.HIGH)
+        while not end_of_game:
+            pass
+        welcome()
+    elif option == "Q":
+        print("Come back soon!")
+        exit()
+    else:
+        print("Invalid option. Please select a valid one!")
+
 # Guess button
 def btn_guess_pressed(channel):
     global number_of_tries
@@ -141,7 +172,7 @@ def btn_guess_pressed(channel):
                 the_scores_count, the_scores = fetch_scores()
                 #end game
                 GPIO.cleanup()
-                main()
+                menu()
                 pass
                 #store the scores on the eeprom
         else:
@@ -158,38 +189,8 @@ def btn_guess_pressed(channel):
         trigger_buzzer()
         #end game
         GPIO.cleanup()
-        main()
+        menu()
     pass
-
-
-# Print the game menu
-def menu():
-    global value
-    global end_of_game
-    option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
-    option = option.upper()
-    if option == "H":
-        os.system('clear')
-        print("HIGH SCORES!!")
-        s_count, ss = fetch_scores()
-        display_scores(s_count, ss)
-    elif option == "P":
-        setup()
-        os.system('clear')
-        print("Starting a new round!")
-        print("Use the buttons on the Pi to make and submit your guess!")
-        print("Press and hold the guess button to cancel your game")
-        value = generate_number()
-        print("The guess is now 7(LEDs all on)")
-        GPIO.output([11, 13, 15], GPIO.HIGH)
-        while not end_of_game:
-            pass
-        welcome()
-    elif option == "Q":
-        print("Come back soon!")
-        exit()
-    else:
-        print("Invalid option. Please select a valid one!")
 
 
 def display_scores(count, raw_data):
