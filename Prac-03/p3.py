@@ -84,6 +84,7 @@ def menu():
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
         print("The guess is now 7(LEDs all on)")
+
         while not end_of_game:
             pass
         welcome()
@@ -235,18 +236,20 @@ def btn_guess_pressed(channel):
         if _guess == value:
                 #disable LEDS
                 GPIO.output(LEDS, GPIO.LOW)
+                #disable LED
                 accuracy_leds()
-                trigger_buzzer()
                 #disable buzzer
+                trigger_buzzer()
                 #user name
                 name = input("Enter your name: ")
-                #fetch scores 
-                #add name to the scores
+                
+                #add name to the scores(first 3 letters)
                 save_scores([name[:3],number_of_tries])
                 end_of_game = False 
-                print("Done with round")
+                #fetch scores 
                 the_scores_count, the_scores = fetch_scores()
-                print(the_scores)
+                #end game
+                GPIO.cleanup()
                 pass
                 #store the scores on the eeprom
         else:
@@ -257,8 +260,13 @@ def btn_guess_pressed(channel):
             _guess=0
     elif 2 <= buttonTime:
         print("took a lil sip")
-        end_of_game = False   
-    print("game done")   
+        end_of_game = False
+        #shut buzzer down
+        _guess = value
+        trigger_buzzer()
+        #end game
+        GPIO.cleanup()
+       
     pass
 
 
