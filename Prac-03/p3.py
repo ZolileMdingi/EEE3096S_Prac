@@ -146,13 +146,13 @@ def getName(nameChars):
 
 # Load high scores
 def fetch_scores():
-    global eeprom_scores
     # get however many scores there are
     score_count = None
     # Get the scores
     # convert the codes back to ascii
     # return back the results
     score_count = eeprom.read_byte(0x00)
+    print("scores stored: ",score_count)
     time.sleep(0.5)
     scores_raw = eeprom.read_block(1,score_count*4)
     # scores_raw = eeprom_scores
