@@ -321,6 +321,7 @@ def trigger_buzzer():
     # If the user is off by an absolute value of 3, the buzzer should sound once every second
     # If the user is off by an absolute value of 2, the buzzer should sound twice every second
     # If the user is off by an absolute value of 1, the buzzer should sound 4 times a second
+    BUZZER_PWM.start(50)
     print("we have spriti", abs(_guess-value))
     if abs(_guess-value)==3:
         print("diff is   :",abs(_guess-value))
@@ -331,11 +332,10 @@ def trigger_buzzer():
     elif abs(_guess-value)==1:
         print("diff is   :",abs(_guess-value))
         BUZZER_PWM.ChangeFrequency(4)
-    time.sleep(0.1)
-    BUZZER_PWM.start(50)
-    time.sleep(0.1)
-    BUZZER_PWM.stop()
+    
     time.sleep(0.5)
+    BUZZER_PWM.stop()
+    
     # BUZZER_PWM.start(50)
     # for x in range(0,361):
     #     sinVal = math.sin(x * (math.pi / 180.0))    
