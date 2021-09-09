@@ -8,23 +8,21 @@ import time
 
 # some global variables that need to change as we run the program
 end_of_game = None  # set if the user wins or ends the game
-LED_PWM = None
-# DEFINE THE PINS USED HERE
-
-LEDS = [17,27,22]
-PWM_LED = 12
-SUBMIT_BTN = 24
-GUESS_TOGGLE = 23
-BUZZER =13
-BUZZER_PWM = None
-eeprom = ES2EEPROMUtils.ES2EEPROM()
-scores = []
-eeprom_scores =[76, 106, 117, 3, 69, 117, 69, 6, 106, 116, 102, 9, 100, 101, 118, 10]
+number_of_tries = 0
 _guess = 0
 value = 0
-number_of_tries = 0
-PWM_LED = 12
+LED_PWM = None
+BUZZER_PWM = None
 
+#eeprom instance
+eeprom = ES2EEPROMUtils.ES2EEPROM()
+
+# DEFINE THE PINS USED HERE
+LEDS = [11, 13, 15]
+PWM_LED = 32
+SUBMIT_BTN = 16
+GUESS_TOGGLE = 18
+BUZZER = 33
 
 
 def btn_increase_pressed(channel):
@@ -53,7 +51,6 @@ def btn_increase_pressed(channel):
         _guess += 1
     else:
         _guess = 0
-    print("The guess after press ",_guess)
     pass
 
 # Print the game banner
@@ -89,7 +86,6 @@ def menu():
         print(value)
         while not end_of_game:
             pass
-        print("we still here")
         welcome()
     elif option == "Q":
         print("Come back soon!")
@@ -102,13 +98,13 @@ def display_scores(count, raw_data):
     # print the scores to the screen in the expected format
     print("There are {} scores. Here are the top 3!".format(count))
     # print out the scores in the required format
-    raw_data.sort(key=lambda x: x[1])
+    raw_data.sort(key=lambda x: x[1])#sort data
     if count>2:
         for i in range(1,4):
-            data = raw_data[i-1]
+            data = raw_data[i-1] #get High score for ith winner
             print("{} - {} took {} guesses".format(i,data[0],data[1]))
     else:
-        for i in range(1,count):
+        for i in range(1,count+1):
             data = raw_data[i-1]
             print("{} - {} took {} guesses".format(i,data[0],data[1]))
     pass
@@ -116,11 +112,10 @@ def display_scores(count, raw_data):
 
 # Setup Pins
 def setup():
-    global LED_PWM
+    global LED_PWM 
     global BUZZER_PWM
     # Setup board mode
-    GPIO.setmode(GPIO.BCM) # The Board has been set to the Broadcom set up, which is what the chip that powers the pi use.
-    # Setup regular GPIO
+    GPIO.setmode(GPIO.BOARD) 
     
     # LEDs 
     GPIO.setup(LEDS, GPIO.OUT)
