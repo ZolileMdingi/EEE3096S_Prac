@@ -84,7 +84,7 @@ def menu():
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
         print("The guess is now 7(LEDs all on)")
-
+        GPIO.output([11, 13, 15], GPIO.HIGH)
         while not end_of_game:
             pass
         welcome()
@@ -253,20 +253,19 @@ def btn_guess_pressed(channel):
                 pass
                 #store the scores on the eeprom
         else:
-            GPIO.output([11, 13, 15], GPIO.LOW)
-            print("stab")
+            print("The guess is now 7(LEDs all on)")
+            GPIO.output([11, 13, 15], GPIO.HIGH)
             accuracy_leds()
             trigger_buzzer()
             _guess=0
     elif 2 <= buttonTime:
-        print("took a lil sip")
         end_of_game = False
-        #shut buzzer down
+        #shut buzzer down and turn LED off
         _guess = value
+        accuracy_leds()
         trigger_buzzer()
         #end game
         GPIO.cleanup()
-       
     pass
 
 
@@ -308,31 +307,20 @@ def trigger_buzzer():
     # If the user is off by an absolute value of 1, the buzzer should sound 4 times a second
     print("guess ",_guess)
     print("value ",value)
-    print("we have spriti", abs(_guess-value))
     if abs(_guess-value)==3:
-        print("diff is   :",abs(_guess-value))
         BUZZER_PWM.ChangeFrequency(1)
     elif abs(_guess-value)==2:
-        print("diff is   :",abs(_guess-value))
         BUZZER_PWM.ChangeFrequency(2)
     elif abs(_guess-value)==1:
-        print("diff is   :",abs(_guess-value))
         BUZZER_PWM.ChangeFrequency(4)
     if _guess==value:
-        print("stopping")
+        #stop beeping
         buzzerStop(BUZZER_PWM)
     else:
+        #start beeping
         time.sleep(0.5)
         buzzerAlert(BUZZER_PWM)
     time.sleep(0.5)
-    
-    
-    # BUZZER_PWM.start(50)
-    # for x in range(0,361):
-    #     sinVal = math.sin(x * (math.pi / 180.0))    
-    #     toneVal = 2000 + sinVal * 500
-    #     BUZZER_PWM.ChangeFrequency(toneVal)
-    #     time.sleep(0.001)
     pass
 
 
