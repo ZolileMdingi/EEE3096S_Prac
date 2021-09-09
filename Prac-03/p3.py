@@ -128,7 +128,7 @@ def setup():
     
     # Setup PWM channels
     GPIO.setup(PWM_LED, GPIO.OUT)
-    LED_PWM = GPIO.PWM(PWM_LED, 1000)
+    LED_PWM = GPIO.PWM(PWM_LED, 1)
     LED_PWM.start(0)
 
     GPIO.setup(BUZZER, GPIO.OUT)
@@ -336,7 +336,7 @@ def trigger_buzzer():
     # time.sleep(0.1)
     # BUZZER_PWM.stop()
     # time.sleep(0.5)
-    # p.start(50)
+    BUZZER_PWM.start(50)
     for x in range(0,361):
         sinVal = math.sin(x * (math.pi / 180.0))    
         toneVal = 2000 + sinVal * 500
