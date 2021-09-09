@@ -65,52 +65,6 @@ def welcome():
     print("")
     print("Guess the number and immortalise your name in the High Score Hall of Fame!")
 
-
-# Print the game menu
-def menu():
-    global value
-    global end_of_game
-    option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
-    option = option.upper()
-    if option == "H":
-        os.system('clear')
-        print("HIGH SCORES!!")
-        s_count, ss = fetch_scores()
-        display_scores(s_count, ss)
-    elif option == "P":
-        os.system('clear')
-        print("Starting a new round!")
-        print("Use the buttons on the Pi to make and submit your guess!")
-        print("Press and hold the guess button to cancel your game")
-        value = generate_number()
-        print("The guess is now 7(LEDs all on)")
-        GPIO.output([11, 13, 15], GPIO.HIGH)
-        while not end_of_game:
-            pass
-        welcome()
-    elif option == "Q":
-        print("Come back soon!")
-        exit()
-    else:
-        print("Invalid option. Please select a valid one!")
-
-
-def display_scores(count, raw_data):
-    # print the scores to the screen in the expected format
-    print("There are {} scores. Here are the top 3!".format(count))
-    # print out the scores in the required format
-    raw_data.sort(key=lambda x: x[1])#sort data
-    if count>2:
-        for i in range(1,4):
-            data = raw_data[i-1] #get High score for ith winner
-            print("{} - {} took {} guesses".format(i,data[0],data[1]))
-    else:
-        for i in range(1,count+1):
-            data = raw_data[i-1]
-            print("{} - {} took {} guesses".format(i,data[0],data[1]))
-    pass
-
-
 # Setup Pins
 def setup():
     global LED_PWM 
@@ -139,70 +93,6 @@ def setup():
     GPIO.add_event_detect(SUBMIT_BTN,GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
     pass
 
-def getName(nameChars):
-    name = ''
-    for x in nameChars:
-        name = name + chr(x)
-    return name
-
-# Load high scores
-def fetch_scores():
-    # get however many scores there are
-    score_count = None
-    # Get the scores
-    # convert the codes back to ascii
-    # return back the results
-    score_count = eeprom.read_byte(0x00) #get number of scores
-    # print("scores stored: ",score_count)
-    time.sleep(0.5)
-    scores_raw = eeprom.read_block(1,score_count*4) #read all data from eeprom
-    # scores_raw = eeprom_scores
-    scores = []
-    for x in range(0, len(scores_raw),4):
-        scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
-    return score_count, scores
-
-
-
-# Save high scores
-def save_scores(newScore):
-    # global eeprom_scores
-    # fetch scores
-    # include new score
-    # sort
-    # update total amount of scores
-    # write new scores
-    oldScoresCount, oldScores = fetch_scores()
-    oldScores.append(newScore) #add the new score to the scores in the eeprom
-    oldScores.sort(key=lambda x: x[1])
-    data_to_write = [] #array to store <8bit values for each register in each block
-    #convert data for storage in eeprom
-    for score in oldScores:
-        for letter in score[0]:
-            data_to_write.append(ord(letter))
-        data_to_write.append(score[1])
-    # clear the eeprom to write new data to it.
-    eeprom.clear((oldScoresCount+1)*4)
-    time.sleep(0.1)
-    #write number of scores
-    eeprom.write_block(0x00, [oldScoresCount+1])
-    time.sleep(0.1)
-    #write scores to eeprom
-    eeprom.write_block(1, data_to_write)
-    print("Score for",newScore[0],"successfully saved")
-    pass 
-
-
-# Generate guess number
-def generate_number():
-    return random.randint(0, pow(2, 3)-1)
-
-
-# Increase button pressed
-#
-def addScore(scores, newScore):
-    scores.append(newScore)
-    
 # Guess button
 def btn_guess_pressed(channel):
     global number_of_tries
@@ -272,6 +162,120 @@ def btn_guess_pressed(channel):
     pass
 
 
+# Print the game menu
+def menu():
+    global value
+    global end_of_game
+    option = input("Select an option:   H - View High Scores     P - Play Game       Q - Quit\n")
+    option = option.upper()
+    if option == "H":
+        os.system('clear')
+        print("HIGH SCORES!!")
+        s_count, ss = fetch_scores()
+        display_scores(s_count, ss)
+    elif option == "P":
+        setup()
+        os.system('clear')
+        print("Starting a new round!")
+        print("Use the buttons on the Pi to make and submit your guess!")
+        print("Press and hold the guess button to cancel your game")
+        value = generate_number()
+        print("The guess is now 7(LEDs all on)")
+        GPIO.output([11, 13, 15], GPIO.HIGH)
+        while not end_of_game:
+            pass
+        welcome()
+    elif option == "Q":
+        print("Come back soon!")
+        exit()
+    else:
+        print("Invalid option. Please select a valid one!")
+
+
+def display_scores(count, raw_data):
+    # print the scores to the screen in the expected format
+    print("There are {} scores. Here are the top 3!".format(count))
+    # print out the scores in the required format
+    raw_data.sort(key=lambda x: x[1])#sort data
+    if count>2:
+        for i in range(1,4):
+            data = raw_data[i-1] #get High score for ith winner
+            print("{} - {} took {} guesses".format(i,data[0],data[1]))
+    else:
+        for i in range(1,count+1):
+            data = raw_data[i-1]
+            print("{} - {} took {} guesses".format(i,data[0],data[1]))
+    pass
+
+
+
+
+def getName(nameChars):
+    name = ''
+    for x in nameChars:
+        name = name + chr(x)
+    return name
+
+# Load high scores
+def fetch_scores():
+    # get however many scores there are
+    score_count = None
+    # Get the scores
+    # convert the codes back to ascii
+    # return back the results
+    score_count = eeprom.read_byte(0x00) #get number of scores
+    # print("scores stored: ",score_count)
+    time.sleep(0.5)
+    scores_raw = eeprom.read_block(1,score_count*4) #read all data from eeprom
+    # scores_raw = eeprom_scores
+    scores = []
+    for x in range(0, len(scores_raw),4):
+        scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
+    return score_count, scores
+
+
+
+# Save high scores
+def save_scores(newScore):
+    # global eeprom_scores
+    # fetch scores
+    # include new score
+    # sort
+    # update total amount of scores
+    # write new scores
+    oldScoresCount, oldScores = fetch_scores()
+    oldScores.append(newScore) #add the new score to the scores in the eeprom
+    oldScores.sort(key=lambda x: x[1])
+    data_to_write = [] #array to store <8bit values for each register in each block
+    #convert data for storage in eeprom
+    for score in oldScores:
+        for letter in score[0]:
+            data_to_write.append(ord(letter))
+        data_to_write.append(score[1])
+    # clear the eeprom to write new data to it.
+    eeprom.clear((oldScoresCount+1)*4)
+    time.sleep(0.1)
+    #write number of scores
+    eeprom.write_block(0x00, [oldScoresCount+1])
+    time.sleep(0.1)
+    #write scores to eeprom
+    eeprom.write_block(1, data_to_write)
+    print("Score for",newScore[0],"successfully saved")
+    pass 
+
+
+# Generate guess number
+def generate_number():
+    return random.randint(0, pow(2, 3)-1)
+
+
+# Increase button pressed
+#
+def addScore(scores, newScore):
+    scores.append(newScore)
+    
+
+
 # LED Brightness
 def accuracy_leds():
     global LED_PWM
@@ -330,7 +334,7 @@ def trigger_buzzer():
 if __name__ == "__main__":
     try:
         # Call setup function
-        setup()
+        
         welcome()
         while True:
             menu()
