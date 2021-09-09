@@ -310,6 +310,7 @@ def trigger_buzzer():
         print("diff is   :",abs(_guess-value))
         BUZZER_PWM.ChangeFrequency(4)
     if _guess==value:
+        print("stopping")
         buzzerStop(BUZZER_PWM)
     else:
         time.sleep(0.5)
