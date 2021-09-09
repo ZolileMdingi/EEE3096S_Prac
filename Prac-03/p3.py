@@ -251,6 +251,7 @@ def btn_guess_pressed(channel):
                 the_scores_count, the_scores = fetch_scores()
                 #end game
                 GPIO.cleanup()
+                main()
                 pass
                 #store the scores on the eeprom
         else:
@@ -267,6 +268,7 @@ def btn_guess_pressed(channel):
         trigger_buzzer()
         #end game
         GPIO.cleanup()
+        main()
     pass
 
 
