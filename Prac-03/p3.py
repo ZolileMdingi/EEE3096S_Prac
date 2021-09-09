@@ -83,7 +83,7 @@ def menu():
         print("Use the buttons on the Pi to make and submit your guess!")
         print("Press and hold the guess button to cancel your game")
         value = generate_number()
-        print("The guess is now 7(LEDs all on)
+        print("The guess is now 7(LEDs all on)")
         while not end_of_game:
             pass
         welcome()
