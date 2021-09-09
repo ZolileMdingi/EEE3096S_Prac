@@ -7,7 +7,7 @@ import time
 
 # some global variables that need to change as we run the program
 end_of_game = None  # set if the user wins or ends the game
-pi_pwm = None
+LED_PWM = None
 # DEFINE THE PINS USED HERE
 
 LEDS = [17,27,22]
@@ -15,6 +15,7 @@ PWM_LED = 12
 SUBMIT_BTN = 24
 GUESS_TOGGLE = 23
 BUZZER =13
+BUZZER_PWM = None
 eeprom = ES2EEPROMUtils.ES2EEPROM()
 scores = []
 eeprom_scores =[76, 106, 117, 3, 69, 117, 69, 6, 106, 116, 102, 9, 100, 101, 118, 10]
@@ -22,6 +23,7 @@ _guess = 0
 value = 0
 number_of_tries = 0
 PWM_LED = 12
+
 
 
 def btn_increase_pressed(channel):
@@ -110,7 +112,8 @@ def display_scores(count, raw_data):
 
 # Setup Pins
 def setup():
-    global pi_pwm
+    global LED_PWM
+    global BUZZER_PWM
     # Setup board mode
     GPIO.setmode(GPIO.BCM) # The Board has been set to the Broadcom set up, which is what the chip that powers the pi use.
     # Setup regular GPIO
@@ -121,13 +124,19 @@ def setup():
     #Buttons
     GPIO.setup(SUBMIT_BTN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(GUESS_TOGGLE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(GUESS_TOGGLE,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
-    GPIO.add_event_detect(SUBMIT_BTN,GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
+    
     # Setup PWM channels
     GPIO.setup(PWM_LED, GPIO.OUT)
-    pi_pwm = GPIO.PWM(PWM_LED, 1000)
-    pi_pwm.start(0)
+    LED_PWM = GPIO.PWM(PWM_LED, 1000)
+    LED_PWM.start(0)
+
+    GPIO.setup(BUZZER, GPIO.OUT)
+    BUZZER_PWM = GPIO.PWM(BUZZER, 1)
+    BUZZER_PWM.start(0)
+
     # Setup debouncing and callbacks
+    GPIO.add_event_detect(GUESS_TOGGLE,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
+    GPIO.add_event_detect(SUBMIT_BTN,GPIO.FALLING, callback=btn_guess_pressed, bouncetime=500)
     pass
 
 def getName(nameChars):
@@ -144,7 +153,8 @@ def fetch_scores():
     # Get the scores
     # convert the codes back to ascii
     # return back the results
-    # score_count = eeprom.read_block(0xff,1)[0]
+    # score_count = eeprom.read_byte(0x00)
+    #sleep(0.5)
     # scores_raw = eeprom.read_block(1,score_count*4)
     scores_raw = eeprom_scores
     scores = []
@@ -270,6 +280,7 @@ def btn_guess_pressed(channel):
             GPIO.output([22,27,17], GPIO.LOW)
             _guess=0
             accuracy_leds()
+            trigger_buzzer()
     elif 2 <= buttonTime:
         print("took a lil sip")
         end_of_game = False   
@@ -279,7 +290,7 @@ def btn_guess_pressed(channel):
 
 # LED Brightness
 def accuracy_leds():
-    global pi_pwm
+    global LED_PWM
     # Set the brightness of the LED based on how close the guess is to the answer
     # - The % brightness should be directly proportional to the % "closeness"
     # - For example if the answer is 6 and a user guesses 4, the brightness should be at 4/6*100 = 66%
@@ -294,17 +305,30 @@ def accuracy_leds():
         brightness = 0
     dc = brightness*100
     print(dc)
-    pi_pwm.ChangeDutyCycle(dc)
+    LED_PWM.ChangeDutyCycle(dc)
     pass
 
 # Sound Buzzer
 def trigger_buzzer():
+    global _guess
+    global value
+    global BUZZER_PWM
     # The buzzer operates differently from the LED
     # While we want the brightness of the LED to change(duty cycle), we want the frequency of the buzzer to change
     # The buzzer duty cycle should be left at 50%
     # If the user is off by an absolute value of 3, the buzzer should sound once every second
     # If the user is off by an absolute value of 2, the buzzer should sound twice every second
     # If the user is off by an absolute value of 1, the buzzer should sound 4 times a second
+    BUZZER_PWM.start(50)
+    if abs(_guess-value)==3:
+        BUZZER_PWM.ChangeFrequency(1)
+    elif abs(_guess-value)==2:
+        BUZZER_PWM.ChangeFrequency(2)
+    elif abs(_guess-value)==1:
+        BUZZER_PWM.ChangeFrequency(4)
+    BUZZER_PWM.stop()
+    time.sleep(0.5)
+    
     pass
 
 
