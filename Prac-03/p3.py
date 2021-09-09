@@ -189,6 +189,7 @@ def save_scores(newScore):
     time.sleep(0.1)
     #write scores to eeprom
     eeprom.write_block(1, data_to_write)
+    print("Score for",newScore[0],"successfully saved")
     pass 
 
 
@@ -305,8 +306,8 @@ def trigger_buzzer():
     # If the user is off by an absolute value of 3, the buzzer should sound once every second
     # If the user is off by an absolute value of 2, the buzzer should sound twice every second
     # If the user is off by an absolute value of 1, the buzzer should sound 4 times a second
-    print("guess ",_guess)
-    print("value ",value)
+    # print("guess ",_guess)
+    # print("value ",value)
     if abs(_guess-value)==3:
         BUZZER_PWM.ChangeFrequency(1)
     elif abs(_guess-value)==2:
@@ -330,7 +331,6 @@ if __name__ == "__main__":
         setup()
         welcome()
         while True:
-            print("starting")
             menu()
             pass
     except Exception as e:
