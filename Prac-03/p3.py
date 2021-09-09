@@ -321,6 +321,7 @@ def trigger_buzzer():
     # If the user is off by an absolute value of 2, the buzzer should sound twice every second
     # If the user is off by an absolute value of 1, the buzzer should sound 4 times a second
     BUZZER_PWM.start(50)
+    print("we have spriti", abs(_guess-value))
     if abs(_guess-value)==3:
         BUZZER_PWM.ChangeFrequency(1)
     elif abs(_guess-value)==2:
@@ -329,7 +330,6 @@ def trigger_buzzer():
         BUZZER_PWM.ChangeFrequency(4)
     BUZZER_PWM.stop()
     time.sleep(0.5)
-    
     pass
 
 
