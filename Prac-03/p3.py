@@ -152,10 +152,10 @@ def fetch_scores():
     # Get the scores
     # convert the codes back to ascii
     # return back the results
-    # score_count = eeprom.read_byte(0x00)
-    #sleep(0.5)
-    # scores_raw = eeprom.read_block(1,score_count*4)
-    scores_raw = eeprom_scores
+    score_count = eeprom.read_byte(0x00)
+    sleep(0.5)
+    scores_raw = eeprom.read_block(1,score_count*4)
+    # scores_raw = eeprom_scores
     scores = []
     for x in range(0, len(scores_raw),4):
         scores.append([getName(scores_raw[x:x+3]),scores_raw[x+3]])
@@ -166,7 +166,7 @@ def toRaw():
 
 # Save high scores
 def save_scores(newScore):
-    global eeprom_scores
+    # global eeprom_scores
     print("Saved scores", newScore)
     # fetch scores
     # include new score
@@ -182,10 +182,12 @@ def save_scores(newScore):
             data_to_write.append(ord(letter))
         data_to_write.append(score[1])
     # clear the eeprom to write new data to it.
-    eeprom_scores = data_to_write
-    # eeprom.clear((oldScoreCount+1)*32)
-    # eeprom.write_block(0xff, [oldScoreCount+1])
-    # eeprom.write_block(1, data_to_write)
+    #eeprom_scores = data_to_write
+    eeprom.clear((oldScoreCount+1)*32)
+    sleep(0.1)
+    eeprom.write_block(0xff, [oldScoreCount+1])
+    sleep(0.1)
+    eeprom.write_block(1, data_to_write)
     print("save done")
     pass
 
