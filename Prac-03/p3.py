@@ -278,14 +278,15 @@ def btn_guess_pressed(channel):
                 #store the scores on the eeprom
         else:
             GPIO.output([22,27,17], GPIO.LOW)
-            _guess=0
+            _guess=0 
+            print("stab")
             accuracy_leds()
             trigger_buzzer()
     elif 2 <= buttonTime:
         print("took a lil sip")
         end_of_game = False   
     print("game done")   
-    # pass
+    pass
 
 
 # LED Brightness
