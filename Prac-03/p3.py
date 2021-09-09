@@ -132,7 +132,7 @@ def setup():
 
     GPIO.setup(BUZZER, GPIO.OUT)
     BUZZER_PWM = GPIO.PWM(BUZZER, 1)
-    BUZZER_PWM.start(0)
+    BUZZER_PWM.start(50)
 
     # Setup debouncing and callbacks
     GPIO.add_event_detect(GUESS_TOGGLE,GPIO.FALLING, callback=btn_increase_pressed, bouncetime=500)
