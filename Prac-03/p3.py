@@ -247,7 +247,6 @@ def btn_guess_pressed(channel):
                 #store the scores on the eeprom
         else:
             GPIO.output([22,27,17], GPIO.LOW)
-            _guess=0 
             print("stab")
             accuracy_leds()
             trigger_buzzer()
