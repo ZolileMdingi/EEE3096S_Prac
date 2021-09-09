@@ -28,24 +28,24 @@ BUZZER = 33
 def btn_increase_pressed(channel):
     global _guess
     if _guess == 0:
-        GPIO.output([22,27,17], GPIO.LOW)
+        GPIO.output([11, 13, 15], GPIO.LOW)
     elif _guess == 1:
-        GPIO.output(22, GPIO.HIGH)
+        GPIO.output(15, GPIO.HIGH)
     elif _guess == 2:
-        GPIO.output(27, GPIO.HIGH)
-        GPIO.output(22, GPIO.LOW)
+        GPIO.output(13, GPIO.HIGH)
+        GPIO.output(15, GPIO.LOW)
     elif _guess == 3:
-        GPIO.output([27, 22], GPIO.HIGH)
+        GPIO.output([13, 15], GPIO.HIGH)
     elif _guess == 4:
-        GPIO.output([27, 22], GPIO.LOW)
-        GPIO.output(17, GPIO.HIGH)
+        GPIO.output([13, 15], GPIO.LOW)
+        GPIO.output(11, GPIO.HIGH)
     elif _guess == 5:
-        GPIO.output(22, GPIO.HIGH)
+        GPIO.output(15, GPIO.HIGH)
     elif _guess == 6:
-        GPIO.output(22, GPIO.LOW) 
-        GPIO.output(27, GPIO.HIGH)
+        GPIO.output(15, GPIO.LOW) 
+        GPIO.output(13, GPIO.HIGH)
     elif _guess == 7:
-        GPIO.output(22, GPIO.HIGH)
+        GPIO.output(15, GPIO.HIGH)
     print(_guess)
     if _guess < 7: 
         _guess += 1
