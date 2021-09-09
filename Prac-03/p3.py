@@ -126,7 +126,7 @@ def setup():
     
     # Setup PWM channels
     GPIO.setup(PWM_LED, GPIO.OUT)
-    LED_PWM = GPIO.PWM(PWM_LED, 1)
+    LED_PWM = GPIO.PWM(PWM_LED, 1000)
     LED_PWM.start(0)
 
     GPIO.setup(BUZZER, GPIO.OUT)
@@ -309,10 +309,13 @@ def trigger_buzzer():
     elif abs(_guess-value)==1:
         print("diff is   :",abs(_guess-value))
         BUZZER_PWM.ChangeFrequency(4)
+    if _guess==value:
+        buzzerStop(BUZZER_PWM)
+    else:
+        time.sleep(0.5)
+        buzzerAlert(BUZZER_PWM)
     time.sleep(0.5)
-    buzzerAlert(BUZZER_PWM)
-    time.sleep(0.5)
-    buzzerStop(BUZZER_PWM)
+    
     
     # BUZZER_PWM.start(50)
     # for x in range(0,361):
