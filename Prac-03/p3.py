@@ -182,7 +182,7 @@ def save_scores(newScore):
             data_to_write.append(ord(letter))
         data_to_write.append(score[1])
     # clear the eeprom to write new data to it.
-    eeprom.clear((oldScoresCount+1)*32)
+    eeprom.clear((oldScoresCount+1)*4)
     time.sleep(0.1)
     #write number of scores
     eeprom.write_block(0x00, [oldScoresCount+1])
