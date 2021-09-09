@@ -108,6 +108,7 @@ def menu():
         display_scores(s_count, ss)
     elif option == "P":
         setup()
+        time.sleep(0.5)
         os.system('clear')
         print("Starting a new round!")
         print("Use the buttons on the Pi to make and submit your guess!")
