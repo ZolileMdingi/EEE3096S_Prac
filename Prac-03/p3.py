@@ -292,11 +292,16 @@ def accuracy_leds():
         brightness = (_guess)/8
     elif _guess<value:
         brightness = (8-value)/(8-_guess)
-    elif _guess==value:
-        brightness = 0
     dc = brightness*100
-    print(dc)
     LED_PWM.ChangeDutyCycle(dc)
+    if _guess==value:
+        brightness = 0
+        dc = brightness*100
+        LED_PWM.ChangeDutyCycle(dc)
+        LED_PWM.stop()
+    else:
+        dc = brightness*100
+        LED_PWM.ChangeDutyCycle(dc)
     pass
 def buzzerAlert(buzzer_pwm):
     buzzer_pwm.start(50)
