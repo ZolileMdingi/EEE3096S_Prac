@@ -328,17 +328,19 @@ def trigger_buzzer():
     # print("value ",value)
     if abs(_guess-value)==3:
         BUZZER_PWM.ChangeFrequency(1)
-    elif abs(_guess-value)==2:
-        BUZZER_PWM.ChangeFrequency(2)
-    elif abs(_guess-value)==1:
-        BUZZER_PWM.ChangeFrequency(4)
-    if _guess==value:
-        #stop beeping
-        buzzerStop(BUZZER_PWM)
-    else:
-        #start beeping
         time.sleep(0.5)
         buzzerAlert(BUZZER_PWM)
+    elif abs(_guess-value)==2:
+        BUZZER_PWM.ChangeFrequency(2)
+        time.sleep(0.5)
+        buzzerAlert(BUZZER_PWM)
+    elif abs(_guess-value)==1:
+        BUZZER_PWM.ChangeFrequency(4)
+        time.sleep(0.5)
+        buzzerAlert(BUZZER_PWM)
+    else:
+        #stop beeping
+        buzzerStop(BUZZER_PWM)
     time.sleep(0.5)
     pass
 
