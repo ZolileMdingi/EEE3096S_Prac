@@ -46,7 +46,6 @@ def btn_increase_pressed(channel):
         GPIO.output(13, GPIO.HIGH)
     elif _guess == 7:
         GPIO.output(15, GPIO.HIGH)
-    print(_guess)
     if _guess < 7: 
         _guess += 1
     else:
@@ -118,12 +117,12 @@ def menu():
         GPIO.output([11, 13, 15], GPIO.HIGH)
         while not end_of_game:
             pass
-        welcome()
     elif option == "Q":
         print("Come back soon!")
         exit()
     else:
         print("Invalid option. Please select a valid one!")
+    welcome()
 
 # Guess button
 def btn_guess_pressed(channel):
@@ -173,6 +172,7 @@ def btn_guess_pressed(channel):
                 the_scores_count, the_scores = fetch_scores()
                 #end game
                 GPIO.cleanup()
+                number_of_tries = 0
                 time.sleep(0.5)
                 menu()
                 pass
@@ -190,6 +190,7 @@ def btn_guess_pressed(channel):
         accuracy_leds()
         trigger_buzzer()
         #end game
+        number_of_tries = 0
         GPIO.cleanup()
         time.sleep(0.5)
         menu()
