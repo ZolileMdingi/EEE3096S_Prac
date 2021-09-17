@@ -120,7 +120,5 @@ class ES2EEPROM:
 
 if __name__ == "__main__":
     eeprom = ES2EEPROM()
-    eeprom.clear(2048)
-    eeprom.populate_mock_scores()
-    sleep(0.5)
-    print(eeprom.read_byte(0x00))
+    eeprom.clear(16000)
+    
