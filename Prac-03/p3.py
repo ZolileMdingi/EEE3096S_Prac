@@ -105,6 +105,7 @@ def menu():
         print("HIGH SCORES!!")
         s_count, ss = fetch_scores()
         display_scores(s_count, ss)
+        menu()
     elif option == "P":
         setup()
         time.sleep(0.5)
@@ -117,12 +118,13 @@ def menu():
         GPIO.output([11, 13, 15], GPIO.HIGH)
         while not end_of_game:
             pass
+        welcome()
     elif option == "Q":
         print("Come back soon!")
         exit()
     else:
         print("Invalid option. Please select a valid one!")
-    welcome()
+    
 
 # Guess button
 def btn_guess_pressed(channel):
