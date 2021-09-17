@@ -297,7 +297,7 @@ def accuracy_leds():
         brightness = ((8-_guess)/(8-value))
     elif value==0 and _guess!=value:
         brightness = (_guess)/8
-    elif _guess<value:
+    elif _guess<value and value!=0:
         brightness = _guess/value
     dc = brightness*100
     LED_PWM.ChangeDutyCycle(dc)
