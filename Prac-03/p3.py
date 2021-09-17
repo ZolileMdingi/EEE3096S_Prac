@@ -196,8 +196,6 @@ def btn_guess_pressed(channel):
         GPIO.cleanup()
         time.sleep(0.5)
         menu()
-    GPIO.cleanup()
-    time.sleep(0.5)
     pass
 
 
