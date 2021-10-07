@@ -12,7 +12,7 @@ cs = digitalio.DigitalInOut(board.D8)
 button = digitalio.DigitalInOut(board.D16)
 button.direction = digitalio.Direction.INPUT
 button.pull = digitalio.Pull.UP
-# switch = Debouncer(button)
+switch = Debouncer(button)
 mcp = MCP.MCP3008(spi, cs)
 lock = threading.Lock()
 ldr_channel = AnalogIn(mcp, MCP.P2)
@@ -65,8 +65,8 @@ def main():
     run_thread()
 
     while(True):
-        # switch.update()
-        if button.value == True:
+        switch.update()
+        if switch.fell == True:
             with lock:
                 if seconds_change == 10:
                     seconds_change = 5
