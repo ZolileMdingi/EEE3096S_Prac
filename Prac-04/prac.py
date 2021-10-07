@@ -14,8 +14,8 @@ temp_channel = AnalogIn(mcp, MCP.P1)
 seconds_change = 10
 def temp_in_C(raw_temp):
     ADC_VREF = 5
-    ADC_V_PER_COUNT = ADC_VREF/1023
-    MCP9700_T_COEFF = 100
+    ADC_V_PER_COUNT = ADC_VREF/1024
+    MCP9700_T_COEFF = 0.01
     MCP9700_OFFSET = 0.5
     voltage = raw_temp*ADC_V_PER_COUNT
     return (voltage-MCP9700_OFFSET)*MCP9700_T_COEFF
