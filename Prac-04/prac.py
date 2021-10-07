@@ -55,8 +55,15 @@ def change_secs():
         seconds_change = 10
         return
 def main():
-    run_thread()
+    try:
+        button_setup(36)
+        run_thread()
+    except Exception as e:
+        print(e)
+        GPIO.cleanup()
     
+    
+     
 
 
 # print('Raw ADC Value: ', channel.value)
