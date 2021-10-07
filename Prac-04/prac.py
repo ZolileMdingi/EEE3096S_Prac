@@ -32,7 +32,7 @@ def app(temp_channel, ldr_channel):
         print("{runningtime:<6}s \t {temp_reading:<9.2f} \t {temmp:<4.2f} C \t {l_reading:<9.2f}".format(runningtime = second,temp_reading = temp_channel.value,temmp = temp_in_C(temp_channel.value),l_reading  = ldr_channel.value))
         with lock:
             time.sleep(seconds_change)
-            second + seconds_change
+            second =second + seconds_change
 def change_secs():
     global seconds_change
     if seconds_change == 10:
