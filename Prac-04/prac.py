@@ -40,7 +40,7 @@ def app(temp_channel, ldr_channel):
     global stop_thread
     second = 0
     init_second_val = time.time()
-    print("{:<7s} \t{:<12s} \t{:<4s}  \t{:<12s}".format("Runtime","Temp Reading","Temp","Light Reading"))
+    print("{:<7s} {:<12s} \t{:<4s}  \t{:<12s}".format("Runtime","Temp Reading","Temp","Light Reading"))
     while not stop_thread:
         print((str(round(second))+'s').ljust(6),'\t','{:<9.2f}'.format(temp_channel.value),'\t','{:<4.2f}'.format(temp_in_C(temp_channel.voltage)),'C \t',"{:<9.2f}".format(ldr_channel.value))       
         # print("{runningtime:<}s \t {temp_reading:<9.2f} \t {temmp:<4.2f} C \t {l_reading:<9.2f}".format(runningtime = round(second),temp_reading = temp_channel.value,temmp = temp_in_C(temp_channel.value,temp_channel.voltage),l_reading  = ldr_channel.value))
