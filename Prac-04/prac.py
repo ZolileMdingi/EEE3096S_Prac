@@ -2,6 +2,7 @@ import time
 import busio
 import digitalio
 import board
+import RPi.GPIO as GPIO
 import threading
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
@@ -12,6 +13,13 @@ lock = threading.Lock()
 ldr_channel = AnalogIn(mcp, MCP.P2)
 temp_channel = AnalogIn(mcp, MCP.P1)
 seconds_change = 10
+
+def button_setup(pin):
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(pin,GPIO.FALLING, callback=change_secs, bouncetime=500)
+
+
 def temp_in_C(raw_temp,voltageVal):
     ADC_VREF = 5
     ADC_V_PER_COUNT = ADC_VREF/1024
@@ -27,23 +35,29 @@ def run_thread():
 def app(temp_channel, ldr_channel):
     global seconds_change
     second = 0
+    init_second_val = time.time()
     print("{} \t {} \t {}   \t {}".format("Runtime","Temp Reading","Temp","Light Reading"))
     while(True):       
-        print("{runningtime:<}s \t {temp_reading:<9.2f} \t {temmp:<4.2f} C \t {l_reading:<9.2f}".format(runningtime = second,temp_reading = temp_channel.value,temmp = temp_in_C(temp_channel.value,temp_channel.voltage),l_reading  = ldr_channel.value))
+        print("{runningtime:<}s \t {temp_reading:<9.2f} \t {temmp:<4.2f} C \t {l_reading:<9.2f}".format(runningtime = round(second),temp_reading = temp_channel.value,temmp = temp_in_C(temp_channel.value,temp_channel.voltage),l_reading  = ldr_channel.value))
         with lock:
             time.sleep(seconds_change)
-            second =second + seconds_change
+            second =time.time() - init_second_val
 def change_secs():
+    global lock
     global seconds_change
-    if seconds_change == 10:
-        seconds_change = 5
+    with lock:
+        if seconds_change == 10:
+            seconds_change = 5
+            return
+        elif seconds_change == 5:
+            seconds_change = 1
+            return
+        seconds_change = 10
         return
-    elif seconds_change == 5:
-        seconds_change = 1
-        return
-    seconds_change = 10
-    return
-app(temp_channel,ldr_channel)
+def main():
+    run_thread()
+    
+
 
 # print('Raw ADC Value: ', channel.value)
 # print('ADC Voltage: ' + str(channel.voltage) + 'V')
