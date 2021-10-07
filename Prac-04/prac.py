@@ -55,6 +55,7 @@ def change_secs():
         seconds_change = 10
         return
 def main():
+    print("here")
     try:
         button_setup(36)
         run_thread()
