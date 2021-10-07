@@ -1,4 +1,3 @@
-from typing_extensions import runtime
 import time
 import busio
 import digitalio
