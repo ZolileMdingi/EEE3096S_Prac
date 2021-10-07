@@ -9,6 +9,8 @@ from adafruit_mcp3xxx.analog_in import AnalogIn
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 cs = digitalio.DigitalInOut(board.D8)
 button = digitalio.DigitalInOut(board.D16)
+button.direction = digitalio.Direction.OUTPUT
+button.pull = digitalio.Pull.UP
 mcp = MCP.MCP3008(spi, cs)
 lock = threading.Lock()
 ldr_channel = AnalogIn(mcp, MCP.P2)
@@ -57,13 +59,17 @@ def change_secs():
         seconds_change = 10
         return
 def main():
-    print("here")
-    try:
-        # //button_setup(36)
-        run_thread()
-    except Exception as e:
-        print(e)
-        GPIO.cleanup()
+    global seconds_change
+    run_thread()
+    while(True):
+        if button.value == True:
+            with lock:
+                if seconds_change == 10:
+                    seconds_change = 5
+                elif seconds_change == 5:
+                    seconds_change = 1
+                else:
+                    seconds_change = 10
     
     
      
