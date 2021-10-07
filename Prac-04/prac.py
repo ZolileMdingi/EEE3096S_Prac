@@ -11,3 +11,4 @@ channel = AnalogIn(mcp, MCP.P2)
 
 print('Raw ADC Value: ', channel.value)
 print('ADC Voltage: ' + str(channel.voltage) + 'V')
+#egfw
