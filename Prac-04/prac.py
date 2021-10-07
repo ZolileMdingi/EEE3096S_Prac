@@ -3,6 +3,7 @@ import busio
 import digitalio
 import board
 import RPi.GPIO as GPIO
+from adafruit_debouncer import Debouncer
 import threading
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
@@ -11,6 +12,7 @@ cs = digitalio.DigitalInOut(board.D8)
 button = digitalio.DigitalInOut(board.D16)
 button.direction = digitalio.Direction.INPUT
 button.pull = digitalio.Pull.UP
+switch = Debouncer(button)
 mcp = MCP.MCP3008(spi, cs)
 lock = threading.Lock()
 ldr_channel = AnalogIn(mcp, MCP.P2)
@@ -61,7 +63,9 @@ def change_secs():
 def main():
     global seconds_change
     run_thread()
+
     while(True):
+        # switch.update()
         if button.value == True:
             with lock:
                 if seconds_change == 10:
@@ -70,7 +74,7 @@ def main():
                     seconds_change = 1
                 else:
                     seconds_change = 10
-    
+            time.sleep(0.5)
     
      
 
