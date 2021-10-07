@@ -12,13 +12,13 @@ lock = threading.Lock()
 ldr_channel = AnalogIn(mcp, MCP.P2)
 temp_channel = AnalogIn(mcp, MCP.P1)
 seconds_change = 10
-def temp_in_C(raw_temp):
+def temp_in_C(raw_temp,voltageVal):
     ADC_VREF = 5
     ADC_V_PER_COUNT = ADC_VREF/1024
     MCP9700_T_COEFF = 0.01
     MCP9700_OFFSET = 0.5
     voltage = raw_temp*ADC_V_PER_COUNT
-    return (voltage-MCP9700_OFFSET)*MCP9700_T_COEFF
+    return (voltageVal-MCP9700_OFFSET)/MCP9700_T_COEFF
 
 
 def run_thread():
@@ -29,7 +29,7 @@ def app(temp_channel, ldr_channel):
     second = 0
     print("{} \t {} \t {}   \t {}".format("Runtime","Temp Reading","Temp","Light Reading"))
     while(True):       
-        print("{runningtime:<6}s \t {temp_reading:<9.2f} \t {temmp:<4.2f} C \t {l_reading:<9.2f}".format(runningtime = second,temp_reading = temp_channel.value,temmp = temp_in_C(temp_channel.value),l_reading  = ldr_channel.value))
+        print("{runningtime:<}s \t {temp_reading:<9.2f} \t {temmp:<4.2f} C \t {l_reading:<9.2f}".format(runningtime = second,temp_reading = temp_channel.value,temmp = temp_in_C(temp_channel.value,temp_channel.voltage),l_reading  = ldr_channel.value))
         with lock:
             time.sleep(seconds_change)
             second =second + seconds_change
