@@ -7,7 +7,8 @@ import threading
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
-cs = digitalio.DigitalInOut(board.D5)
+cs = digitalio.DigitalInOut(board.D8)
+button = digitalio.DigitalInOut(board.D16)
 mcp = MCP.MCP3008(spi, cs)
 lock = threading.Lock()
 ldr_channel = AnalogIn(mcp, MCP.P2)
@@ -15,7 +16,8 @@ temp_channel = AnalogIn(mcp, MCP.P1)
 seconds_change = 10
 
 def button_setup(pin):
-    GPIO.setmode(GPIO.BOARD)
+   # GPIO.setmode(GPIO.BOARD)
+
     GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(pin,GPIO.FALLING, callback=change_secs, bouncetime=500)
 
@@ -57,7 +59,7 @@ def change_secs():
 def main():
     print("here")
     try:
-        button_setup(36)
+        # //button_setup(36)
         run_thread()
     except Exception as e:
         print(e)
