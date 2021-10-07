@@ -9,7 +9,7 @@ from adafruit_mcp3xxx.analog_in import AnalogIn
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 cs = digitalio.DigitalInOut(board.D8)
 button = digitalio.DigitalInOut(board.D16)
-button.direction = digitalio.Direction.OUTPUT
+button.direction = digitalio.Direction.INPUT
 button.pull = digitalio.Pull.UP
 mcp = MCP.MCP3008(spi, cs)
 lock = threading.Lock()
