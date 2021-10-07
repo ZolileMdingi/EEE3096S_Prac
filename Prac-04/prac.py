@@ -3,7 +3,7 @@ import busio
 import digitalio
 import board
 import RPi.GPIO as GPIO
-# from adafruit_debouncer import Debouncer
+from adafruit_debouncer import Debouncer
 import threading
 import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn
