@@ -43,8 +43,8 @@ def app(temp_channel, ldr_channel):
     global stop_thread
     second = 0
     init_second_val = time.time() #time execution begins
-    print("{:<7s} \t {:<12s} \t{:<4s}  \t{:<12s}".format("Runtime","Temp Reading","Temp","Light Reading"))
-    # print("Runtime".ljust(7),'\t{:<12}'.format(temp_channel.value),'\t','{:<4.2f}'.format(temp_in_C(temp_channel.voltage)),'C \t',"{:<9.2f}".format(ldr_channel.value))
+    # print("{:<7s} \t {:<12s} \t{:<4s}  \t{:<12s}".format("Runtime","Temp Reading","Temp","Light Reading"))
+    print("Runtime".ljust(7),'\t{:<12}'.format("Temp Reading"),'\t','{:<4.2f}'.format("Temp"),'  \t',"{:<9.2f}".format("Light Reading"))
     while not stop_thread: #while thread not stopped
         print((str(round(second))+'s').ljust(7),'\t{:<12.2f}'.format(temp_channel.value),'\t','{:<4.2f}'.format(temp_in_C(temp_channel.voltage)),'C \t',"{:<12.2f}".format(ldr_channel.value))  
         with lock:#prevent changes to seconds_change and second to occur while executing statements by other threads
