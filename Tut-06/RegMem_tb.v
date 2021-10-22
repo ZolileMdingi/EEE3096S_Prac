@@ -1,3 +1,5 @@
+// Code your testbench here
+// or browse Examples
 `timescale 1ns / 1ps
 
 module tb_reg_mem;
@@ -22,22 +24,22 @@ module tb_reg_mem;
         wen = 1;
         //Test of write functionality
       	//if it is functional will be able to read values from reg
-      for(int i=10;i<42;i=i+1) 
-        begin
-            data_in = i; 
-            addr = (i-10);
-            $display("Write %d to address %d",data_in,addr);
-            repeat (2) #1 clk = ~clk;
-        end
+      for(int i=10;i<43;i=i+1)
+ 		begin
+           data_in = i;
+           addr = (i+2);
+          $display("Write %d to address %d",data_in,addr);
+          repeat (2) #1 clk = ~clk;
+		end
         wen =0;
         
         //Test Read functionality
-      for(int i=0;i<32;i=i+1) 
-        begin
-            //data_in = i; 
-          addr = i;
-          $display("Read %d from address %d",data_out,addr);
-            repeat (2) #1 clk = ~clk;
-        end
+      for(int i=10;i<42;i=i+1)
+       begin
+         data_in = i;
+         addr = (i+2);
+         $display("Read %d from address %d",data_out,addr);
+         repeat (2) #1 clk = ~clk;
+ 		end
   end
 endmodule
