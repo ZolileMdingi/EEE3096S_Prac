@@ -1,4 +1,4 @@
-##  Python Flask based webserver running on your Pi
+#  Python Flask based webserver running on your Pi
 
 This Repository contains all the code for all the Practicals and Tutorial we did for EEE3096s.
 
@@ -6,9 +6,9 @@ The Code for the Python Flask based Webserver is found on the Python_Flask_Based
 
 This project simply serves up `Hello World! Meet 👨‍💻Wavhudi(MLDWAV001) and 👨‍💻Zolile(MDNAVE001)` on port `:80` of your balena device.
 
-# Below are images showing the webserver running, with the running status on the Belana monitoring Web Interface
-![one]:(/Python_Flask_Based_Webserver/img/one.png)
-![two]:(/Python_Flask_Based_Webserver/img/two.png)
+## Below are images showing the webserver running, with the running status on the Belana monitoring Web Interface
+![one](/Python_Flask_Based_Webserver/img/one.png)
+![two](/Python_Flask_Based_Webserver/img/two.png)
 
 
 [folder-link]:https://github.com/ZolileMdingi/EEE3096S_Prac/tree/main/Python_Flask_Based_Webserver
