@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module CU (clk,rst, instr, result2, operand1, operand2, offset, opcode, sel1, sel3,w_r);
+module CU (clk,rst, instr, result2, operand1, operand2, offset, opcode, sel1, sel3,w_r,outReg);
     //Defaults unless overwritten during instantiation
     parameter DATA_WIDTH = 8; //8 bit wide data
     parameter ADDR_BITS = 5; //32 Addresses
@@ -15,10 +15,11 @@ module CU (clk,rst, instr, result2, operand1, operand2, offset, opcode, sel1, se
     output reg [DATA_WIDTH-1:0] operand2;
     output reg [DATA_WIDTH-1:0] offset;
     output reg [3:0] opcode;
+    output reg [DATA_WIDTH-1:0] outReg [0:3];
     output reg sel1, sel3, w_r;
 
     //REGISTER FILE: CU internal register file of 4 registers.  This is a over simplication of a real solution
-    reg [DATA_WIDTH-1:0] regfile [0:3];
+    reg [DATA_WIDTH-1:0] regfile [0:7];
     reg [INSTR_WIDTH-1:0]instruction;
     
     //STATES
@@ -188,6 +189,7 @@ module CU (clk,rst, instr, result2, operand1, operand2, offset, opcode, sel1, se
             end
 
             default: // Fault Recovery
+            outReg <= regfile;
             state = RESET; //#0
         endcase
     end
